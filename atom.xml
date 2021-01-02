@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ほぼろ</title>
+  
+  <subtitle>〜心に灯す竹あかり、なので〜</subtitle>
+  <link href="https://chen-yixin.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://chen-yixin.github.io/"/>
+  <updated>2021-01-02T11:16:43.781Z</updated>
+  <id>https://chen-yixin.github.io/</id>
+  
+  <author>
+    <name>Chen Yixin</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>文件Hash计算</title>
+    <link href="https://chen-yixin.github.io/2020/11/01/file-hash/"/>
+    <id>https://chen-yixin.github.io/2020/11/01/file-hash/</id>
+    <published>2020-11-01T08:02:01.000Z</published>
+    <updated>2021-01-02T11:16:43.781Z</updated>
+    
+    <content type="html"><![CDATA[<p>下载一个文件之后检查文件是否正确,使用hash数值确认是否一致,基于系统自带的命令可以无需下载第三方工具完成hash计算</p><a id="more"></a><h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><ul><li>支持以下Hash算法: <code>MD2</code>,<code>MD4</code>,<code>MD5</code>,<code>SHA1</code>,<code>SHA256</code>,<code>SHA384</code>,<code>SHA512</code></li></ul><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># MD5</span></span><br><span class="line">certutil <span class="literal">-hashfile</span> &lt;文件路径&gt; MD5</span><br><span class="line"></span><br><span class="line"><span class="comment"># SHA1</span></span><br><span class="line">certutil <span class="literal">-hashfile</span> &lt;文件路径&gt; SHA1</span><br></pre></td></tr></table></figure><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># MD5</span></span><br><span class="line">md5sum &lt;文件路径&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># SHA1</span></span><br><span class="line">sha1sum &lt;文件路径&gt;</span><br></pre></td></tr></table></figure><h2 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># MD5</span></span><br><span class="line">md5 &lt;文件路径&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># SHA1</span></span><br><span class="line">shasum &lt;文件路径&gt;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;下载一个文件之后检查文件是否正确,使用hash数值确认是否一致,基于系统自带的命令可以无需下载第三方工具完成hash计算&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="教程文档" scheme="https://chen-yixin.github.io/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
+    
+    
+    <category term="Linux" scheme="https://chen-yixin.github.io/tags/Linux/"/>
+    
+    <category term="Windows" scheme="https://chen-yixin.github.io/tags/Windows/"/>
+    
+    <category term="macOS" scheme="https://chen-yixin.github.io/tags/macOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iptables</title>
+    <link href="https://chen-yixin.github.io/2020/11/01/iptables/"/>
+    <id>https://chen-yixin.github.io/2020/11/01/iptables/</id>
+    <published>2020-11-01T06:46:38.000Z</published>
+    <updated>2021-01-02T11:16:43.782Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前使用privoxy用于分流代理,之后替换了方案,但是没有<code>access-permit</code>同等的功能。</p><a id="more"></a><p>调查后发现使用<code>iptables</code>可以实现访问控制的功能。</p><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>设备: Raspberry Pi 3B+<br>OS: Debian 10 (buster) aarch64</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install iptables</span><br></pre></td></tr></table></figure><p>由于debian系默认不实用配置文件的方式持久化,因此补充安装以下包</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install iptables-persistent netfilter-persistent</span><br></pre></td></tr></table></figure><h2 id="生成-应用配置文件"><a href="#生成-应用配置文件" class="headerlink" title="生成/应用配置文件"></a>生成/应用配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">netfilter-persistent save   <span class="comment"># 保存规则到配置文件</span></span><br><span class="line">netfilter-persistent start  <span class="comment"># 从配置文件加载规则</span></span><br><span class="line"></span><br><span class="line">iptables-save  &gt; /etc/iptables/rules.v4</span><br><span class="line">ip6tables-save &gt; /etc/iptables/rules.v6</span><br><span class="line"></span><br><span class="line">iptables-restore  &lt; /etc/iptables/rules.v4</span><br><span class="line">ip6tables-restore &lt; /etc/iptables/rules.v6</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看防火墙+显示行号</span></span><br><span class="line">iptables -nL --line-numbers</span><br></pre></td></tr></table></figure><h2 id="规则配置"><a href="#规则配置" class="headerlink" title="规则配置"></a>规则配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 放行一个ip地址</span></span><br><span class="line">iptables -A INPUT -s 192.168.1.100 -p tcp -m tcp --dport 8080 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 放行一个网段</span></span><br><span class="line">iptables -A INPUT -s 192.168.2.0/24 -p tcp -m tcp --dport 8080 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 放行多个端口</span></span><br><span class="line">iptables -A INPUT -s 192.168.2.0/24 -p tcp -m multiport --dports 22,80:88 -j ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拒绝一个端口(丢弃包,无返回)</span></span><br><span class="line">iptables -A INPUT -p tcp -m tcp --dport 8080 -j DROP</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拒绝一个端口(返回拒绝信息)</span></span><br><span class="line">iptables -A INPUT -p tcp -m tcp --dport 8080 -j REJECT  </span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;之前使用privoxy用于分流代理,之后替换了方案,但是没有&lt;code&gt;access-permit&lt;/code&gt;同等的功能。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="教程文档" scheme="https://chen-yixin.github.io/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
+    
+    
+    <category term="Linux" scheme="https://chen-yixin.github.io/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo文章发布</title>
+    <link href="https://chen-yixin.github.io/2020/10/24/hexo-wen-zhang-fa-bu/"/>
+    <id>https://chen-yixin.github.io/2020/10/24/hexo-wen-zhang-fa-bu/</id>
+    <published>2020-10-23T16:00:00.000Z</published>
+    <updated>2020-10-24T09:20:14.409Z</updated>
+    
+    <content type="html"><![CDATA[<p>记录Hexo文章发布用到的几条命令</p><a id="more"></a><p>如果直接使用<code>hexo new &lt;title&gt;</code>的方式新建文章，会在<code>source/_posts</code>新建文章，使用<code>hexo generate</code>编译markdown文件时，输出到<code>public</code>目录下，之后<code>hexo deploy</code>则将未完成的文章一并部署到服务器。使用<code>draft</code>机制规避以上问题</p><h2 id="建立文章草稿"><a href="#建立文章草稿" class="headerlink" title="建立文章草稿"></a>建立文章草稿</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new draft &lt;title&gt;</span><br></pre></td></tr></table></figure><h2 id="本机预览草稿"><a href="#本机预览草稿" class="headerlink" title="本机预览草稿"></a>本机预览草稿</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server --draft  <span class="comment"># hexo s --draft</span></span><br></pre></td></tr></table></figure><h2 id="草稿转为正式文章"><a href="#草稿转为正式文章" class="headerlink" title="草稿转为正式文章"></a>草稿转为正式文章</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo publish &lt;title&gt;  <span class="comment"># hexo p &lt;title&gt;</span></span><br></pre></td></tr></table></figure><h2 id="静态文件生成-amp-发布"><a href="#静态文件生成-amp-发布" class="headerlink" title="静态文件生成&amp;发布"></a>静态文件生成&amp;发布</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 静态文件生成</span></span><br><span class="line">hexo generate  <span class="comment"># hexo g</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署静态文件到服务器</span></span><br><span class="line">hexo deploy  <span class="comment"># hexo d</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态文件+部署一步</span></span><br><span class="line">hexo g -d  <span class="comment"># hexo d -g</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;记录Hexo文章发布用到的几条命令&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="教程文档" scheme="https://chen-yixin.github.io/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
+    
+    
+    <category term="Hexo" scheme="https://chen-yixin.github.io/tags/Hexo/"/>
+    
+  </entry>
+  
+</feed>
