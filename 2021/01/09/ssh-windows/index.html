@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="/img/coffee.png">
-  <title>Hexo文章发布 | ほぼろ</title>
+  <title>使用SSH管理Windows | ほぼろ</title>
   <meta name="author" content="Chen Yixin" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,22 +13,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="Hexo" />
+    <meta name="keywords" content="SSH, Windows" />
   
-  <meta name="description" content="记录Hexo文章发布用到的几条命令">
+  <meta name="description" content="网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo文章发布">
-<meta property="og:url" content="https://www.hoboro.top/2020/10/24/hexo-wen-zhang-fa-bu/index.html">
+<meta property="og:title" content="使用SSH管理Windows">
+<meta property="og:url" content="https://www.hoboro.top/2021/01/09/ssh-windows/index.html">
 <meta property="og:site_name" content="ほぼろ">
-<meta property="og:description" content="记录Hexo文章发布用到的几条命令">
+<meta property="og:description" content="网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.hoboro.top/img/coffee.png">
-<meta property="article:published_time" content="2020-10-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-24T09:20:14.409Z">
+<meta property="og:image" content="https://www.hoboro.top/2021/01/09/ssh-windows/http:/img.hoboro.top/picgo/20210109190949.png">
+<meta property="article:published_time" content="2021-01-09T12:44:23.000Z">
+<meta property="article:modified_time" content="2021-01-09T12:44:23.150Z">
 <meta property="article:author" content="Chen Yixin">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="SSH">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.hoboro.top/img/coffee.png">
+<meta name="twitter:image" content="https://www.hoboro.top/2021/01/09/ssh-windows/http:/img.hoboro.top/picgo/20210109190949.png">
 <meta name="twitter:site" content="@null">
   
   <!-- 站点验证相关 -->
@@ -142,17 +143,17 @@
     <article>
         <div class="kratos-hentry kratos-post-inner clearfix">
             <header class="kratos-entry-header">
-                <h1 class="kratos-entry-title text-center">Hexo文章发布</h1>
+                <h1 class="kratos-entry-title text-center">使用SSH管理Windows</h1>
                 
                 <div class="kratos-post-meta text-center">
                     <span>
-                        <i class="fa fa-calendar"></i> 2020-10-24
+                        <i class="fa fa-calendar"></i> 2021-01-09
                         <i class="fa fa-folder"></i> 分类 <a class="label-link" href="/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/">教程文档</a>
                         <i class="fa fa-user"></i> 作者 Chen Yixin
                         <i class="fa fa-edit"></i> 
                         
                         
-                            427
+                            ~1.78K
                         
                         字
                         
@@ -161,21 +162,58 @@
             </header>
             <div class="kratos-post-content">
                 <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1603531214409"></time> 前，其中的内容可能需要更新。
+                    本文最后编辑于 <time datetime="1610196263150"></time> 前，其中的内容可能需要更新。
                 </div>
                 
+                    <div class="kratos-post-inner-toc">
+                        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85OpenSSH-Server"><span class="toc-number">1.</span> <span class="toc-text">安装OpenSSH Server</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="toc-number">1.1.</span> <span class="toc-text">图形界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PowerShell%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">PowerShell方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E8%AE%A4OpenSSH%E5%8F%AF%E7%94%A8%E4%BA%8E%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.1.</span> <span class="toc-text">确认OpenSSH可用于安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85OpenSSH-Server-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">安装OpenSSH Server</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenSSH-Server-%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">OpenSSH Server 服务配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E3%80%81%E9%98%B2%E7%81%AB%E5%A2%99%E7%9B%B8%E5%85%B3"><span class="toc-number">2.1.</span> <span class="toc-text">服务、防火墙相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AF%86%E9%92%A5%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="toc-number">2.2.</span> <span class="toc-text">配置密钥免密登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89-%E9%85%8D%E7%BD%AEPowerShell%E4%BD%9C%E4%B8%BASSH%E8%BF%9E%E6%8E%A5%E9%BB%98%E8%AE%A4SHELL"><span class="toc-number">2.3.</span> <span class="toc-text">(可选)配置PowerShell作为SSH连接默认SHELL</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
+                    </div>
+                
                 <hr />
-                <p>记录Hexo文章发布用到的几条命令</p>
+                <p>网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务</p>
 <a id="more"></a>
 
-<p>如果直接使用<code>hexo new &lt;title&gt;</code>的方式新建文章，会在<code>source/_posts</code>新建文章，使用<code>hexo generate</code>编译markdown文件时，输出到<code>public</code>目录下，之后<code>hexo deploy</code>则将未完成的文章一并部署到服务器。使用<code>draft</code>机制规避以上问题</p>
-<h2 id="建立文章草稿"><a href="#建立文章草稿" class="headerlink" title="建立文章草稿"></a>建立文章草稿</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new draft &lt;title&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据微软文档描述,适用于Windows 10 1809 或 Windows Server 2019以上版本</li>
+<li>以下内容如果无特别说明,在远程Windows主机上操作</li>
+</ul>
+<h1 id="安装OpenSSH-Server"><a href="#安装OpenSSH-Server" class="headerlink" title="安装OpenSSH Server"></a>安装OpenSSH Server</h1><h2 id="图形界面"><a href="#图形界面" class="headerlink" title="图形界面"></a>图形界面</h2><p>点开 <strong>设置</strong> -&gt; <strong>应用</strong> -&gt; <strong>应用与功能</strong> -&gt; <strong>可选功能</strong></p>
+<p><img src="http://img.hoboro.top/picgo/20210109193605.png"></p>
+<p>点击 <strong>添加功能</strong> 后跳出对话框,输入”ssh”,勾选安装”OpenSSH 服务器”</p>
+<p><img src="http://img.hoboro.top/picgo/20210109193825.png"></p>
+<h2 id="PowerShell方式"><a href="#PowerShell方式" class="headerlink" title="PowerShell方式"></a>PowerShell方式</h2><p>以下操作需要<strong>管理员</strong>权限</p>
+<h3 id="确认OpenSSH可用于安装"><a href="#确认OpenSSH可用于安装" class="headerlink" title="确认OpenSSH可用于安装"></a>确认OpenSSH可用于安装</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-WindowsCapability</span> <span class="literal">-Online</span> | ? Name <span class="operator">-like</span> <span class="string">&#x27;OpenSSH*&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="本机预览草稿"><a href="#本机预览草稿" class="headerlink" title="本机预览草稿"></a>本机预览草稿</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server --draft  <span class="comment"># hexo s --draft</span></span><br></pre></td></tr></table></figure>
+<p><em>输出以下内容</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name  : OpenSSH.Client~~~~0.0.1.0</span><br><span class="line">State : Installed</span><br><span class="line"></span><br><span class="line">Name  : OpenSSH.Server~~~~0.0.1.0</span><br><span class="line">State : NotPresent</span><br></pre></td></tr></table></figure>
 
-<h2 id="草稿转为正式文章"><a href="#草稿转为正式文章" class="headerlink" title="草稿转为正式文章"></a>草稿转为正式文章</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo publish &lt;title&gt;  <span class="comment"># hexo p &lt;title&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="安装OpenSSH-Server-1"><a href="#安装OpenSSH-Server-1" class="headerlink" title="安装OpenSSH Server"></a>安装OpenSSH Server</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Add-WindowsCapability</span> <span class="literal">-Online</span> <span class="literal">-Name</span> OpenSSH.Server~~~~<span class="number">0.0</span>.<span class="number">1.0</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="静态文件生成-amp-发布"><a href="#静态文件生成-amp-发布" class="headerlink" title="静态文件生成&amp;发布"></a>静态文件生成&amp;发布</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 静态文件生成</span></span><br><span class="line">hexo generate  <span class="comment"># hexo g</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署静态文件到服务器</span></span><br><span class="line">hexo deploy  <span class="comment"># hexo d</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态文件+部署一步</span></span><br><span class="line">hexo g -d  <span class="comment"># hexo d -g</span></span><br></pre></td></tr></table></figure>
+<p><em>输出以下内容</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Path          :</span><br><span class="line">Online        : True</span><br><span class="line">RestartNeeded : False</span><br></pre></td></tr></table></figure>
+
+<h1 id="OpenSSH-Server-服务配置"><a href="#OpenSSH-Server-服务配置" class="headerlink" title="OpenSSH Server 服务配置"></a>OpenSSH Server 服务配置</h1><p>以下操作需要<strong>管理员</strong>权限</p>
+<h2 id="服务、防火墙相关"><a href="#服务、防火墙相关" class="headerlink" title="服务、防火墙相关"></a>服务、防火墙相关</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启服务</span></span><br><span class="line"><span class="built_in">Start-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置自启动</span></span><br><span class="line"><span class="built_in">Set-Service</span> <span class="literal">-Name</span> sshd <span class="literal">-StartupType</span> <span class="string">&#x27;Automatic&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line"><span class="built_in">Get-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment">#关闭服务</span></span><br><span class="line"><span class="built_in">Stop-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line"><span class="built_in">Restart-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确认防火墙是放开的</span></span><br><span class="line"><span class="built_in">Get-NetFirewallRule</span> <span class="literal">-Name</span> *ssh*</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>确认<code>OpenSSH-Server-In-TCP</code>状态是 <code>enabled</code></li>
+<li>至此可以在本地尝试<code>ssh username@ip</code>连接到远程机器</li>
+</ol>
+<h2 id="配置密钥免密登录"><a href="#配置密钥免密登录" class="headerlink" title="配置密钥免密登录"></a>配置密钥免密登录</h2><p><strong>↓本地执行</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 生成密钥对</span></span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找到公钥文件,复制内容备用</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Windows</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> %HOMEPATH%\.ssh\id_rsa.pub</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Linux</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$HOME</span>/.ssh/id_rsa.pu</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>↑本地执行 | 远程执行↓</strong></p>
+<ol>
+<li>打开文件<code>%HOMEPATH%\.ssh\authorized_keys</code></li>
+<li>把公钥文件添加到上述文件末尾</li>
+<li>修改文件<code>C:\ProgramData\ssh\sshd_config</code>,内容如下</li>
+<li>重启服务<code>Restart-Service sshd</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">C:\ProgramData\ssh\sshd_config</span><br><span class="line">确保以下3条没有被注释</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile    .ssh&#x2F;authorized_keys</span><br><span class="line"></span><br><span class="line">确保以下2条有注释掉</span><br><span class="line"># Match Group administrators</span><br><span class="line">#       AuthorizedKeysFile __PROGRAMDATA__&#x2F;ssh&#x2F;administrators_authorized_keys</span><br></pre></td></tr></table></figure>
+
+<h2 id="可选-配置PowerShell作为SSH连接默认SHELL"><a href="#可选-配置PowerShell作为SSH连接默认SHELL" class="headerlink" title="(可选)配置PowerShell作为SSH连接默认SHELL"></a>(可选)配置PowerShell作为SSH连接默认SHELL</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 管理员运行</span></span><br><span class="line"><span class="built_in">New-ItemProperty</span> <span class="literal">-Path</span> <span class="string">&quot;HKLM:\SOFTWARE\OpenSSH&quot;</span> <span class="literal">-Name</span> DefaultShell <span class="literal">-Value</span> <span class="string">&quot;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe&quot;</span> <span class="literal">-PropertyType</span> String <span class="literal">-Force</span></span><br><span class="line"><span class="built_in">Restart-Service</span> sshd</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows-server/administration/openssh/openssh_server_configuration">适用于 Windows 10 1809 和 Server 2019 的 OpenSSH 服务器配置</a></p>
 
             </div>
             
@@ -229,7 +267,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "https://www.hoboro.top/2020/10/24/hexo-wen-zhang-fa-bu/",
+                text: "https://www.hoboro.top/2021/01/09/ssh-windows/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -241,9 +279,9 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "https://www.hoboro.top/2020/10/24/hexo-wen-zhang-fa-bu/";
-            const title         = "「Hexo文章发布」";
-            const excerpt       = `记录Hexo文章发布用到的几条命令`;
+            const hostUrl       = "https://www.hoboro.top/2021/01/09/ssh-windows/";
+            const title         = "「使用SSH管理Windows」";
+            const excerpt       = `网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -262,10 +300,10 @@
                 <div class="footer-tag clearfix">
                     <div class="pull-left">
                     <i class="fa fa-tags"></i>
-                        <a class="tag-none-link" href="/tags/Hexo/" rel="tag">Hexo</a>
+                        <a class="tag-none-link" href="/tags/SSH/" rel="tag">SSH</a>, <a class="tag-none-link" href="/tags/Windows/" rel="tag">Windows</a>
                     </div>
                     <div class="pull-date">
-                    <span>最后编辑：2020-10-24</span>
+                    <span>最后编辑：2021-01-09</span>
                     </div>
                 </div>
             </footer>
@@ -273,10 +311,10 @@
         
             <nav class="navigation post-navigation clearfix" role="navigation">
                 
-                
-                <div class="nav-next clearfix">
-                    <a title=" iptables" href="/2020/11/01/iptables/">下一篇 &gt;</a>
+                <div class="nav-previous clearfix">
+                    <a title=" (无标题)" href="/2021/01/06/20210106/">&lt; 上一篇</a>
                 </div>
+                
                 
             </nav>
         
@@ -315,7 +353,7 @@
     </div>
     <div class="textwidget">
         
-            <p class="text-center">分分秒秒 时时刻刻 朝朝暮暮</p>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85OpenSSH-Server"><span class="toc-number">1.</span> <span class="toc-text">安装OpenSSH Server</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="toc-number">1.1.</span> <span class="toc-text">图形界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PowerShell%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">PowerShell方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E8%AE%A4OpenSSH%E5%8F%AF%E7%94%A8%E4%BA%8E%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.1.</span> <span class="toc-text">确认OpenSSH可用于安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85OpenSSH-Server-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">安装OpenSSH Server</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenSSH-Server-%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">OpenSSH Server 服务配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E3%80%81%E9%98%B2%E7%81%AB%E5%A2%99%E7%9B%B8%E5%85%B3"><span class="toc-number">2.1.</span> <span class="toc-text">服务、防火墙相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AF%86%E9%92%A5%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="toc-number">2.2.</span> <span class="toc-text">配置密钥免密登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89-%E9%85%8D%E7%BD%AEPowerShell%E4%BD%9C%E4%B8%BASSH%E8%BF%9E%E6%8E%A5%E9%BB%98%E8%AE%A4SHELL"><span class="toc-number">2.3.</span> <span class="toc-text">(可选)配置PowerShell作为SSH连接默认SHELL</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
         
     </div>
 </aside>

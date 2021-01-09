@@ -4,7 +4,7 @@
   <!-- 元数据 -->
   <meta charset="utf-8">
   <link rel="icon" href="/img/coffee.png">
-  <title>Hexo文章发布 | ほぼろ</title>
+  <title>ほぼろ</title>
   <meta name="author" content="Chen Yixin" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -13,20 +13,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta name="format-detection" content="telphone=no, email=no" />
   
-    <meta name="keywords" content="Hexo" />
+    <meta name="keywords" content="动态" />
   
-  <meta name="description" content="记录Hexo文章发布用到的几条命令">
+  <meta name="description" content="今日打牌。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo文章发布">
-<meta property="og:url" content="https://www.hoboro.top/2020/10/24/hexo-wen-zhang-fa-bu/index.html">
+<meta property="og:title" content="ほぼろ">
+<meta property="og:url" content="https://www.hoboro.top/2021/01/06/20210106/index.html">
 <meta property="og:site_name" content="ほぼろ">
-<meta property="og:description" content="记录Hexo文章发布用到的几条命令">
+<meta property="og:description" content="今日打牌。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.hoboro.top/img/coffee.png">
-<meta property="article:published_time" content="2020-10-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-24T09:20:14.409Z">
+<meta property="article:published_time" content="2021-01-06T13:07:48.000Z">
+<meta property="article:modified_time" content="2021-01-06T13:07:48.572Z">
 <meta property="article:author" content="Chen Yixin">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="动态">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.hoboro.top/img/coffee.png">
 <meta name="twitter:site" content="@null">
@@ -142,17 +142,17 @@
     <article>
         <div class="kratos-hentry kratos-post-inner clearfix">
             <header class="kratos-entry-header">
-                <h1 class="kratos-entry-title text-center">Hexo文章发布</h1>
+                <h1 class="kratos-entry-title text-center"></h1>
                 
                 <div class="kratos-post-meta text-center">
                     <span>
-                        <i class="fa fa-calendar"></i> 2020-10-24
-                        <i class="fa fa-folder"></i> 分类 <a class="label-link" href="/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/">教程文档</a>
+                        <i class="fa fa-calendar"></i> 2021-01-06
+                        <i class="fa fa-folder"></i> 分类 <a class="label-link" href="/categories/%E5%8A%A8%E6%80%81/">动态</a>
                         <i class="fa fa-user"></i> 作者 Chen Yixin
                         <i class="fa fa-edit"></i> 
                         
                         
-                            427
+                            6
                         
                         字
                         
@@ -161,21 +161,11 @@
             </header>
             <div class="kratos-post-content">
                 <div id="expire-alert" class="alert alert-warning hidden" role="alert">
-                    本文最后编辑于 <time datetime="1603531214409"></time> 前，其中的内容可能需要更新。
+                    本文最后编辑于 <time datetime="1609938468572"></time> 前，其中的内容可能需要更新。
                 </div>
                 
                 <hr />
-                <p>记录Hexo文章发布用到的几条命令</p>
-<a id="more"></a>
-
-<p>如果直接使用<code>hexo new &lt;title&gt;</code>的方式新建文章，会在<code>source/_posts</code>新建文章，使用<code>hexo generate</code>编译markdown文件时，输出到<code>public</code>目录下，之后<code>hexo deploy</code>则将未完成的文章一并部署到服务器。使用<code>draft</code>机制规避以上问题</p>
-<h2 id="建立文章草稿"><a href="#建立文章草稿" class="headerlink" title="建立文章草稿"></a>建立文章草稿</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new draft &lt;title&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="本机预览草稿"><a href="#本机预览草稿" class="headerlink" title="本机预览草稿"></a>本机预览草稿</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server --draft  <span class="comment"># hexo s --draft</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="草稿转为正式文章"><a href="#草稿转为正式文章" class="headerlink" title="草稿转为正式文章"></a>草稿转为正式文章</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo publish &lt;title&gt;  <span class="comment"># hexo p &lt;title&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="静态文件生成-amp-发布"><a href="#静态文件生成-amp-发布" class="headerlink" title="静态文件生成&amp;发布"></a>静态文件生成&amp;发布</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 静态文件生成</span></span><br><span class="line">hexo generate  <span class="comment"># hexo g</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署静态文件到服务器</span></span><br><span class="line">hexo deploy  <span class="comment"># hexo d</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态文件+部署一步</span></span><br><span class="line">hexo g -d  <span class="comment"># hexo d -g</span></span><br></pre></td></tr></table></figure>
+                <p>今日打牌。</p>
 
             </div>
             
@@ -229,7 +219,7 @@
     <script type="text/javascript">
         $(()=>{
             new QRCode("wechat-qr", {
-                text: "https://www.hoboro.top/2020/10/24/hexo-wen-zhang-fa-bu/",
+                text: "https://www.hoboro.top/2021/01/06/20210106/",
                 width: 150,
                 height: 150,
                 correctLevel : QRCode.CorrectLevel.H
@@ -241,9 +231,10 @@
             const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
             const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
             const twitterBase   = "https://twitter.com/intent/tweet?";
-            const hostUrl       = "https://www.hoboro.top/2020/10/24/hexo-wen-zhang-fa-bu/";
-            const title         = "「Hexo文章发布」";
-            const excerpt       = `记录Hexo文章发布用到的几条命令`;
+            const hostUrl       = "https://www.hoboro.top/2021/01/06/20210106/";
+            const title         = "「」";
+            const excerpt       = `今日打牌。
+`;
             let _URL;
             switch (dest) {
                 case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
@@ -262,10 +253,10 @@
                 <div class="footer-tag clearfix">
                     <div class="pull-left">
                     <i class="fa fa-tags"></i>
-                        <a class="tag-none-link" href="/tags/Hexo/" rel="tag">Hexo</a>
+                        <a class="tag-none-link" href="/tags/%E5%8A%A8%E6%80%81/" rel="tag">动态</a>
                     </div>
                     <div class="pull-date">
-                    <span>最后编辑：2020-10-24</span>
+                    <span>最后编辑：2021-01-06</span>
                     </div>
                 </div>
             </footer>
@@ -273,31 +264,17 @@
         
             <nav class="navigation post-navigation clearfix" role="navigation">
                 
+                <div class="nav-previous clearfix">
+                    <a title=" たまゆら-花火" href="/2021/01/04/tamayura-hua-huo/">&lt; 上一篇</a>
+                </div>
+                
                 
                 <div class="nav-next clearfix">
-                    <a title=" iptables" href="/2020/11/01/iptables/">下一篇 &gt;</a>
+                    <a title=" 使用SSH管理Windows" href="/2021/01/09/ssh-windows/">下一篇 &gt;</a>
                 </div>
                 
             </nav>
         
-        
-            <div class="post-comments lazy-load">
-    <div id="tcomment"></div>
-</div>
-<script>
-    var load_comm = () => {
-        const init = () => {
-            twikoo.init({ envId: 'twikoo-4gtbybwrccc56106', el: '#tcomment' });
-        }
-        if (typeof twikoo == 'undefined') {
-            const src = 'https://cdn.jsdelivr.net/npm/twikoo@latest/dist/twikoo.all.min.js';
-            $.getScript(src, init);
-        } else {
-            init();
-        }
-    };
-</script>
-<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://twikoo.js.org/">comments powered by Twikoo.</a></noscript>
         
     </article>
 </section>

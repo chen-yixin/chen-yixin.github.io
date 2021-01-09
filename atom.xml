@@ -3,11 +3,11 @@
   <title>ほぼろ</title>
   
   <subtitle>~心に灯す竹あかり、なので~</subtitle>
-  <link href="https://chen-yixin.github.io/atom.xml" rel="self"/>
+  <link href="https://www.hoboro.top/atom.xml" rel="self"/>
   
-  <link href="https://chen-yixin.github.io/"/>
-  <updated>2021-01-02T11:16:43.781Z</updated>
-  <id>https://chen-yixin.github.io/</id>
+  <link href="https://www.hoboro.top/"/>
+  <updated>2021-01-09T12:44:23.150Z</updated>
+  <id>https://www.hoboro.top/</id>
   
   <author>
     <name>Chen Yixin</name>
@@ -17,9 +17,80 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用SSH管理Windows</title>
+    <link href="https://www.hoboro.top/2021/01/09/ssh-windows/"/>
+    <id>https://www.hoboro.top/2021/01/09/ssh-windows/</id>
+    <published>2021-01-09T12:44:23.000Z</published>
+    <updated>2021-01-09T12:44:23.150Z</updated>
+    
+    <content type="html"><![CDATA[<p>网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务</p><a id="more"></a><ul><li>根据微软文档描述,适用于Windows 10 1809 或 Windows Server 2019以上版本</li><li>以下内容如果无特别说明,在远程Windows主机上操作</li></ul><h1 id="安装OpenSSH-Server"><a href="#安装OpenSSH-Server" class="headerlink" title="安装OpenSSH Server"></a>安装OpenSSH Server</h1><h2 id="图形界面"><a href="#图形界面" class="headerlink" title="图形界面"></a>图形界面</h2><p>点开 <strong>设置</strong> -&gt; <strong>应用</strong> -&gt; <strong>应用与功能</strong> -&gt; <strong>可选功能</strong></p><p><img src="http://img.hoboro.top/picgo/20210109193605.png"></p><p>点击 <strong>添加功能</strong> 后跳出对话框,输入”ssh”,勾选安装”OpenSSH 服务器”</p><p><img src="http://img.hoboro.top/picgo/20210109193825.png"></p><h2 id="PowerShell方式"><a href="#PowerShell方式" class="headerlink" title="PowerShell方式"></a>PowerShell方式</h2><p>以下操作需要<strong>管理员</strong>权限</p><h3 id="确认OpenSSH可用于安装"><a href="#确认OpenSSH可用于安装" class="headerlink" title="确认OpenSSH可用于安装"></a>确认OpenSSH可用于安装</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-WindowsCapability</span> <span class="literal">-Online</span> | ? Name <span class="operator">-like</span> <span class="string">&#x27;OpenSSH*&#x27;</span></span><br></pre></td></tr></table></figure><p><em>输出以下内容</em></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name  : OpenSSH.Client~~~~0.0.1.0</span><br><span class="line">State : Installed</span><br><span class="line"></span><br><span class="line">Name  : OpenSSH.Server~~~~0.0.1.0</span><br><span class="line">State : NotPresent</span><br></pre></td></tr></table></figure><h3 id="安装OpenSSH-Server-1"><a href="#安装OpenSSH-Server-1" class="headerlink" title="安装OpenSSH Server"></a>安装OpenSSH Server</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Add-WindowsCapability</span> <span class="literal">-Online</span> <span class="literal">-Name</span> OpenSSH.Server~~~~<span class="number">0.0</span>.<span class="number">1.0</span></span><br></pre></td></tr></table></figure><p><em>输出以下内容</em></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Path          :</span><br><span class="line">Online        : True</span><br><span class="line">RestartNeeded : False</span><br></pre></td></tr></table></figure><h1 id="OpenSSH-Server-服务配置"><a href="#OpenSSH-Server-服务配置" class="headerlink" title="OpenSSH Server 服务配置"></a>OpenSSH Server 服务配置</h1><p>以下操作需要<strong>管理员</strong>权限</p><h2 id="服务、防火墙相关"><a href="#服务、防火墙相关" class="headerlink" title="服务、防火墙相关"></a>服务、防火墙相关</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启服务</span></span><br><span class="line"><span class="built_in">Start-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置自启动</span></span><br><span class="line"><span class="built_in">Set-Service</span> <span class="literal">-Name</span> sshd <span class="literal">-StartupType</span> <span class="string">&#x27;Automatic&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line"><span class="built_in">Get-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment">#关闭服务</span></span><br><span class="line"><span class="built_in">Stop-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line"><span class="built_in">Restart-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确认防火墙是放开的</span></span><br><span class="line"><span class="built_in">Get-NetFirewallRule</span> <span class="literal">-Name</span> *ssh*</span><br></pre></td></tr></table></figure><ol><li>确认<code>OpenSSH-Server-In-TCP</code>状态是 <code>enabled</code></li><li>至此可以在本地尝试<code>ssh username@ip</code>连接到远程机器</li></ol><h2 id="配置密钥免密登录"><a href="#配置密钥免密登录" class="headerlink" title="配置密钥免密登录"></a>配置密钥免密登录</h2><p><strong>↓本地执行</strong></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 生成密钥对</span></span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找到公钥文件,复制内容备用</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Windows</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> %HOMEPATH%\.ssh\id_rsa.pub</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Linux</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$HOME</span>/.ssh/id_rsa.pu</span></span><br></pre></td></tr></table></figure><p><strong>↑本地执行 | 远程执行↓</strong></p><ol><li>打开文件<code>%HOMEPATH%\.ssh\authorized_keys</code></li><li>把公钥文件添加到上述文件末尾</li><li>修改文件<code>C:\ProgramData\ssh\sshd_config</code>,内容如下</li><li>重启服务<code>Restart-Service sshd</code></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">C:\ProgramData\ssh\sshd_config</span><br><span class="line">确保以下3条没有被注释</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile    .ssh&#x2F;authorized_keys</span><br><span class="line"></span><br><span class="line">确保以下2条有注释掉</span><br><span class="line"># Match Group administrators</span><br><span class="line">#       AuthorizedKeysFile __PROGRAMDATA__&#x2F;ssh&#x2F;administrators_authorized_keys</span><br></pre></td></tr></table></figure><h2 id="可选-配置PowerShell作为SSH连接默认SHELL"><a href="#可选-配置PowerShell作为SSH连接默认SHELL" class="headerlink" title="(可选)配置PowerShell作为SSH连接默认SHELL"></a>(可选)配置PowerShell作为SSH连接默认SHELL</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 管理员运行</span></span><br><span class="line"><span class="built_in">New-ItemProperty</span> <span class="literal">-Path</span> <span class="string">&quot;HKLM:\SOFTWARE\OpenSSH&quot;</span> <span class="literal">-Name</span> DefaultShell <span class="literal">-Value</span> <span class="string">&quot;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe&quot;</span> <span class="literal">-PropertyType</span> String <span class="literal">-Force</span></span><br><span class="line"><span class="built_in">Restart-Service</span> sshd</span><br></pre></td></tr></table></figure><h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a href="https://docs.microsoft.com/zh-cn/windows-server/administration/openssh/openssh_server_configuration">适用于 Windows 10 1809 和 Server 2019 的 OpenSSH 服务器配置</a></p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="教程文档" scheme="https://www.hoboro.top/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
+    
+    
+    <category term="Windows" scheme="https://www.hoboro.top/tags/Windows/"/>
+    
+    <category term="SSH" scheme="https://www.hoboro.top/tags/SSH/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://www.hoboro.top/2021/01/06/20210106/"/>
+    <id>https://www.hoboro.top/2021/01/06/20210106/</id>
+    <published>2021-01-06T13:07:48.000Z</published>
+    <updated>2021-01-06T13:07:48.572Z</updated>
+    
+    <content type="html"><![CDATA[<p>今日打牌。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;今日打牌。&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="动态" scheme="https://www.hoboro.top/categories/%E5%8A%A8%E6%80%81/"/>
+    
+    
+    <category term="动态" scheme="https://www.hoboro.top/tags/%E5%8A%A8%E6%80%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>たまゆら-花火</title>
+    <link href="https://www.hoboro.top/2021/01/04/tamayura-hua-huo/"/>
+    <id>https://www.hoboro.top/2021/01/04/tamayura-hua-huo/</id>
+    <published>2021-01-04T15:07:45.000Z</published>
+    <updated>2021-01-04T15:07:45.458Z</updated>
+    
+    <content type="html"><![CDATA[<p>这首歌出自玉响第一季(たまゆら〜hitotose〜)TV未放送5.5话,是在网易云听到这首歌去补的玉响。玉响是个个人觉得不错的治愈番。</p><a id="more"></a><p><img src="http://img.hoboro.top/picgo/ffee0000a8091fffdd4d.jpg"></p><h2 id="在线音乐"><a href="#在线音乐" class="headerlink" title="在线音乐"></a>在线音乐</h2><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=4920727&auto=0&height=66"></iframe><h2 id="歌词原文"><a href="#歌词原文" class="headerlink" title="歌词原文"></a>歌词原文</h2><blockquote><p>　<ruby>花火<rp> (</rp><rt>はなび</rt><rp>) </rp></ruby><br>　<ruby>清浦<rp> (</rp><rt>きようら</rt><rp>) </rp></ruby><ruby>夏実<rp> (</rp><rt>なつみ</rt><rp>) </rp></ruby></p><p>　<ruby>夏<rp> (</rp><rt>なつ</rt><rp>) </rp></ruby>の<ruby>終<rp> (</rp><rt>お</rt><rp>) </rp></ruby>わりの<ruby>打<rp> (</rp><rt>う</rt><rp>) </rp></ruby>ち<ruby>上<rp> (</rp><rt>あ</rt><rp>) </rp></ruby>げ<ruby>花火<rp> (</rp><rt>はなび</rt><rp>) </rp></ruby><br>　<ruby>小<rp> (</rp><rt>ちい</rt><rp>) </rp></ruby>さな<ruby>空<rp> (</rp><rt>そら</rt><rp>) </rp></ruby>を<ruby>赤<rp> (</rp><rt>あか</rt><rp>) </rp></ruby>く<ruby>染<rp> (</rp><rt>そ</rt><rp>) </rp></ruby>めた<br>　ふと<ruby>見上<rp> (</rp><rt>みあ</rt><rp>) </rp></ruby>げれば　<ruby>広<rp> (</rp><rt>ひろ</rt><rp>) </rp></ruby>がる<ruby>星<rp> (</rp><rt>ほし</rt><rp>) </rp></ruby>が<br>　<ruby>描<rp> (</rp><rt>えが</rt><rp>) </rp></ruby>く<ruby>未来<rp> (</rp><rt>みらい</rt><rp>) </rp></ruby>を<ruby>彩<rp> (</rp><rt>いろど</rt><rp>) </rp></ruby>っていた</p><p>　レンズ<ruby>越<rp> (</rp><rt>ご</rt><rp>) </rp></ruby>し<ruby>君<rp> (</rp><rt>きみ</rt><rp>) </rp></ruby>を<ruby>探<rp> (</rp><rt>きみ</rt><rp>) </rp></ruby>しあの<ruby>日<rp> (</rp><rt>ひ</rt><rp>) </rp></ruby>が<ruby>溢<rp> (</rp><rt>あふ</rt><rp>) </rp></ruby>れてきて<br>　<ruby>胸<rp> (</rp><rt>むね</rt><rp>) </rp></ruby>が<ruby>苦<rp> (</rp><rt>くる</rt><rp>) </rp></ruby>しくなる<br>　<ruby>１０年後<rp> (</rp><rt>じゅうねんご</rt><rp>) </rp></ruby>　<ruby>笑<rp> (</rp><rt>わら</rt><rp>) </rp></ruby>って<ruby>話<rp> (</rp><rt>はな</rt><rp>) </rp></ruby>せるように<br>　<ruby>明日<rp> (</rp><rt>あした</rt><rp>) </rp></ruby>を<ruby>始<rp> (</rp><rt>はじ</rt><rp>) </rp></ruby>める</p><p>　lalalaグッバイ<ruby>泣<rp> (</rp><rt>な</rt><rp>) </rp></ruby>いてた<ruby>日々<rp> (</rp><rt>ひび</rt><rp>) </rp></ruby><br>　この<ruby>気持<rp> (</rp><rt>きも</rt><rp>) </rp></ruby>ちはこの<ruby>空<rp> (</rp><rt>そら</rt><rp>) </rp></ruby>に<ruby>預<rp> (</rp><rt>あず</rt><rp>) </rp></ruby>けるよ<br>　だから　グッバイあの<ruby>思<rp> (</rp><rt>おも</rt><rp>) </rp></ruby>い<ruby>出<rp> (</rp><rt>で</rt><rp>) </rp></ruby>は<br>　<ruby>心<rp> (</rp><rt>こころ</rt><rp>) </rp></ruby>の<ruby>中<rp> (</rp><rt>なか</rt><rp>) </rp></ruby>　<ruby>大切<rp> (</rp><rt>たいせつ</rt><rp>) </rp></ruby>にするね<br>　ありがとう</p><p>　<ruby>忘<rp> (</rp><rt>わす</rt><rp>) </rp></ruby>れられない<ruby>大好<rp> (</rp><rt>だいす</rt><rp>) </rp></ruby>きな<ruby>場所<rp> (</rp><rt>ばしょ</rt><rp>) </rp></ruby><br>　ひとりベンチで<ruby>眺<rp> (</rp><rt>なが</rt><rp>) </rp></ruby>める<ruby>空<rp> (</rp><rt>そら</rt><rp>) </rp></ruby>は<br>　<ruby>私<rp> (</rp><rt>わたし</rt><rp>) </rp></ruby>をここに<ruby>置<rp> (</rp><rt>お</rt><rp>) </rp></ruby>いてくように<br>　<ruby>遠<rp> (</rp><rt>とお</rt><rp>) </rp></ruby>くの<ruby>方<rp> (</rp><rt>ほう</rt><rp>) </rp></ruby>へ<ruby>流<rp> (</rp><rt>なが</rt><rp>) </rp></ruby>れていった</p><p>　<ruby>揺<rp> (</rp><rt>ゆ</rt><rp>) </rp></ruby>れる<ruby>風<rp> (</rp><rt>かぜ</rt><rp>) </rp></ruby>　あの<ruby>香<rp> (</rp><rt>かお</rt><rp>) </rp></ruby>りあの<ruby>日<rp> (</rp><rt>ひ</rt><rp>) </rp></ruby>が<ruby>溢<rp> (</rp><rt>あふ</rt><rp>) </rp></ruby>れてきて<br>　<ruby>胸<rp> (</rp><rt>むね</rt><rp>) </rp></ruby>が<ruby>苦<rp> (</rp><rt>くる</rt><rp>) </rp></ruby>しくなる<br>　<ruby>１０年後<rp> (</rp><rt>じゅうねんご</rt><rp>) </rp></ruby>　<ruby>笑<rp> (</rp><rt>わら</rt><rp>) </rp></ruby>って<ruby>話<rp> (</rp><rt>はな</rt><rp>) </rp></ruby>せるように<br>　<ruby>明日<rp> (</rp><rt>あした</rt><rp>) </rp></ruby>を<ruby>始<rp> (</rp><rt>はじ</rt><rp>) </rp></ruby>める</p><p>　lalalaグッバイ<ruby>悲<rp> (</rp><rt>かな</rt><rp>) </rp></ruby>しいこと<br>　<ruby>閉<rp> (</rp><rt>と</rt><rp>) </rp></ruby>じ<ruby>込<rp> (</rp><rt>こ</rt><rp>) </rp></ruby>めてた<ruby>気持<rp> (</rp><rt>きも</rt><rp>) </rp></ruby>ちを<ruby>空<rp> (</rp><rt>そら</rt><rp>) </rp></ruby>に<ruby>放<rp> (</rp><rt>はな</rt><rp>) </rp></ruby>つ<br>　だから　グッバイどんな<ruby>時<rp> (</rp><rt>とき</rt><rp>) </rp></ruby>も<br>　<ruby>強<rp> (</rp><rt>つよ</rt><rp>) </rp></ruby>さなれる<ruby>思<rp> (</rp><rt>おも</rt><rp>) </rp></ruby>い<ruby>出<rp> (</rp><rt>で</rt><rp>) </rp></ruby>をくれて<br>　ありがとう</p><p>　<ruby>過<rp> (</rp><rt>す</rt><rp>) </rp></ruby>ごした<ruby>日<rp> (</rp><rt>ひ</rt><rp>) </rp></ruby>の<ruby>数<rp> (</rp><rt>かず</rt><rp>) </rp></ruby>だけ　<ruby>優<rp> (</rp><rt>やさ</rt><rp>) </rp></ruby>しい<ruby>風<rp> (</rp><rt>かぜ</rt><rp>) </rp></ruby>　<ruby>訪<rp> (</rp><rt>おとず</rt><rp>) </rp></ruby>れるように<br>　しぼんだ<ruby>風船<rp> (</rp><rt>ふうせん</rt><rp>) </rp></ruby>に<ruby>息<rp> (</rp><rt>いき</rt><rp>) </rp></ruby>を<ruby>吹<rp> (</rp><rt>ふ</rt><rp>) </rp></ruby>き込むよ</p><p>　lalalaグッバイ<ruby>昨日<rp> (</rp><rt>きのう</rt><rp>) </rp></ruby>の<ruby>私<rp> (</rp><rt>わたし</rt><rp>) </rp></ruby><br>　<ruby>今日<rp> (</rp><rt>きょう</rt><rp>) </rp></ruby>がくる<ruby>度<rp> (</rp><rt>たび</rt><rp>) </rp></ruby>に<ruby>大人<rp> (</rp><rt>おとな</rt><rp>) </rp></ruby>になってく<br>　あの<ruby>日<rp> (</rp><rt>ひ</rt><rp>) </rp></ruby><ruby>見<rp> (</rp><rt>み</rt><rp>) </rp></ruby>た<ruby>花火<rp> (</rp><rt>はなび</rt><rp>) </rp></ruby>のように<br>　きらめく<ruby>日々<rp> (</rp><rt>ひび</rt><rp>) </rp></ruby>　<ruby>大切<rp> (</rp><rt>たいせつ</rt><rp>) </rp></ruby>にするね<br>　ありがとう</p></blockquote><h2 id="歌词手记"><a href="#歌词手记" class="headerlink" title="歌词手记"></a>歌词手记</h2><blockquote><p>　<ruby>夏<rp> (</rp><rt>なつ</rt><rp>) </rp></ruby>の<ruby>終<rp> (</rp><rt>お</rt><rp>) </rp></ruby>わりの<ruby>打<rp> (</rp><rt>う</rt><rp>) </rp></ruby>ち<ruby>上<rp> (</rp><rt>あ</rt><rp>) </rp></ruby>げ<ruby>花火<rp> (</rp><rt>はなび</rt><rp>) </rp></ruby><br>　<ruby>小<rp> (</rp><rt>ちい</rt><rp>) </rp></ruby>さな<ruby>空<rp> (</rp><rt>そら</rt><rp>) </rp></ruby>を<ruby>赤<rp> (</rp><rt>あか</rt><rp>) </rp></ruby>く<ruby>染<rp> (</rp><rt>そ</rt><rp>) </rp></ruby>めた<br>　ふと<ruby>見上<rp> (</rp><rt>みあ</rt><rp>) </rp></ruby>げれば　<ruby>広<rp> (</rp><rt>ひろ</rt><rp>) </rp></ruby>がる<ruby>星<rp> (</rp><rt>ほし</rt><rp>) </rp></ruby>が<br>　<ruby>描<rp> (</rp><rt>えが</rt><rp>) </rp></ruby>く<ruby>未来<rp> (</rp><rt>みらい</rt><rp>) </rp></ruby>を<ruby>彩<rp> (</rp><rt>いろど</rt><rp>) </rp></ruby>っていた</p></blockquote><ul><li><strong>打ち上げ花火</strong>　烟花(向上发射的)</li><li><strong>染める</strong>　染色</li><li><strong>ふと</strong>　(不意に)突然,猛然</li><li><strong>見上げる</strong>　仰视,抬头看</li><li><strong>彩り</strong>　着色,添彩</li><li>ふと見上げれ<strong>ば</strong>広がる星が　表示条件,如果……就……</li></ul><blockquote><p>　レンズ<ruby>越<rp> (</rp><rt>ご</rt><rp>) </rp></ruby>し<ruby>君<rp> (</rp><rt>きみ</rt><rp>) </rp></ruby>を<ruby>探<rp> (</rp><rt>きみ</rt><rp>) </rp></ruby>しあの<ruby>日<rp> (</rp><rt>ひ</rt><rp>) </rp></ruby>が<ruby>溢<rp> (</rp><rt>あふ</rt><rp>) </rp></ruby>れてきて<br>　<ruby>胸<rp> (</rp><rt>むね</rt><rp>) </rp></ruby>が<ruby>苦<rp> (</rp><rt>くる</rt><rp>) </rp></ruby>しくなる<br>　<ruby>１０年後<rp> (</rp><rt>じゅうねんご</rt><rp>) </rp></ruby>　<ruby>笑<rp> (</rp><rt>わら</rt><rp>) </rp></ruby>って<ruby>話<rp> (</rp><rt>はな</rt><rp>) </rp></ruby>せるように<br>　<ruby>明日<rp> (</rp><rt>あした</rt><rp>) </rp></ruby>を<ruby>始<rp> (</rp><rt>はじ</rt><rp>) </rp></ruby>める</p></blockquote><ul><li><strong>溢れる</strong>　溢出</li><li><strong>苦しい</strong>　痛苦的</li><li>溢れ<strong>てき</strong>て　出来(抽象),变化的进行</li><li>あの日が溢れてき<strong>て</strong>胸が苦しくなる　表示原因理由</li><li>笑っ<strong>て</strong>話せるように　表示状态</li><li>笑って話せる<strong>ように</strong>　为了</li></ul><blockquote><p>　lalalaグッバイ<ruby>泣<rp> (</rp><rt>な</rt><rp>) </rp></ruby>いてた<ruby>日々<rp> (</rp><rt>ひび</rt><rp>) </rp></ruby><br>　この<ruby>気持<rp> (</rp><rt>きも</rt><rp>) </rp></ruby>ちはこの<ruby>空<rp> (</rp><rt>そら</rt><rp>) </rp></ruby>に<ruby>預<rp> (</rp><rt>あず</rt><rp>) </rp></ruby>けるよ<br>　だから　グッバイあの<ruby>思<rp> (</rp><rt>おも</rt><rp>) </rp></ruby>い<ruby>出<rp> (</rp><rt>で</rt><rp>) </rp></ruby>は<br>　<ruby>心<rp> (</rp><rt>こころ</rt><rp>) </rp></ruby>の<ruby>中<rp> (</rp><rt>なか</rt><rp>) </rp></ruby>　<ruby>大切<rp> (</rp><rt>たいせつ</rt><rp>) </rp></ruby>にするね<br>　ありがとう</p></blockquote><ul><li><strong>泣きる</strong>　哭泣</li><li><strong>預ける</strong>　寄托</li><li><strong>にする</strong>　决定</li><li><strong>大切にする</strong>　珍惜</li><li>泣い<strong>てた</strong>　ていた(ている过去式)过去的状态</li><li>この空<strong>に</strong>預けるよ　动作的对象</li></ul><blockquote><p>　<ruby>忘<rp> (</rp><rt>わす</rt><rp>) </rp></ruby>れられない<ruby>大好<rp> (</rp><rt>だいす</rt><rp>) </rp></ruby>きな<ruby>場所<rp> (</rp><rt>ばしょ</rt><rp>) </rp></ruby><br>　ひとりベンチで<ruby>眺<rp> (</rp><rt>なが</rt><rp>) </rp></ruby>める<ruby>空<rp> (</rp><rt>そら</rt><rp>) </rp></ruby>は<br>　<ruby>私<rp> (</rp><rt>わたし</rt><rp>) </rp></ruby>をここに<ruby>置<rp> (</rp><rt>お</rt><rp>) </rp></ruby>いてくように<br>　<ruby>遠<rp> (</rp><rt>とお</rt><rp>) </rp></ruby>くの<ruby>方<rp> (</rp><rt>ほう</rt><rp>) </rp></ruby>へ<ruby>流<rp> (</rp><rt>なが</rt><rp>) </rp></ruby>れていった</p></blockquote><ul><li><strong>流れる</strong>　流动</li><li>ひとりベンチ<strong>で</strong>眺める　动作的对象</li><li>置いてく<strong>ように</strong>　像……一样(主观判断)</li></ul><blockquote><p>　<ruby>揺<rp> (</rp><rt>ゆ</rt><rp>) </rp></ruby>れる<ruby>風<rp> (</rp><rt>かぜ</rt><rp>) </rp></ruby>　あの<ruby>香<rp> (</rp><rt>かお</rt><rp>) </rp></ruby>りあの<ruby>日<rp> (</rp><rt>ひ</rt><rp>) </rp></ruby>が<ruby>溢<rp> (</rp><rt>あふ</rt><rp>) </rp></ruby>れてきて<br>　<ruby>胸<rp> (</rp><rt>むね</rt><rp>) </rp></ruby>が<ruby>苦<rp> (</rp><rt>くる</rt><rp>) </rp></ruby>しくなる<br>　<ruby>１０年後<rp> (</rp><rt>じゅうねんご</rt><rp>) </rp></ruby>　<ruby>笑<rp> (</rp><rt>わら</rt><rp>) </rp></ruby>って<ruby>話<rp> (</rp><rt>はな</rt><rp>) </rp></ruby>せるように<br>　<ruby>明日<rp> (</rp><rt>あした</rt><rp>) </rp></ruby>を<ruby>始<rp> (</rp><rt>はじ</rt><rp>) </rp></ruby>める</p></blockquote><p>(同第2段)</p><blockquote><p>　lalalaグッバイ<ruby>悲<rp> (</rp><rt>かな</rt><rp>) </rp></ruby>しいこと<br>　<ruby>閉<rp> (</rp><rt>と</rt><rp>) </rp></ruby>じ<ruby>込<rp> (</rp><rt>こ</rt><rp>) </rp></ruby>めてた<ruby>気持<rp> (</rp><rt>きも</rt><rp>) </rp></ruby>ちを<ruby>空<rp> (</rp><rt>そら</rt><rp>) </rp></ruby>に<ruby>放<rp> (</rp><rt>はな</rt><rp>) </rp></ruby>つ<br>　だから　グッバイどんな<ruby>時<rp> (</rp><rt>とき</rt><rp>) </rp></ruby>も<br>　<ruby>強<rp> (</rp><rt>つよ</rt><rp>) </rp></ruby>さなれる<ruby>思<rp> (</rp><rt>おも</rt><rp>) </rp></ruby>い<ruby>出<rp> (</rp><rt>で</rt><rp>) </rp></ruby>をくれて<br>　ありがとう</p></blockquote><ul><li><strong>閉じ込め</strong>　关在里面不出来</li><li><strong>放つ</strong>　放,撒开</li><li>どんな時<strong>も</strong>　疑问词+も 全局否定</li><li>思い出を<strong>くれ</strong>て　给(我)</li><li>思い出をくれ<strong>て</strong>　表示原因理由</li></ul><blockquote><p>　<ruby>過<rp> (</rp><rt>す</rt><rp>) </rp></ruby>ごした<ruby>日<rp> (</rp><rt>ひ</rt><rp>) </rp></ruby>の<ruby>数<rp> (</rp><rt>かず</rt><rp>) </rp></ruby>だけ　<ruby>優<rp> (</rp><rt>やさ</rt><rp>) </rp></ruby>しい<ruby>風<rp> (</rp><rt>かぜ</rt><rp>) </rp></ruby>　<ruby>訪<rp> (</rp><rt>おとず</rt><rp>) </rp></ruby>れるように<br>　しぼんだ<ruby>風船<rp> (</rp><rt>ふうせん</rt><rp>) </rp></ruby>に<ruby>息<rp> (</rp><rt>いき</rt><rp>) </rp></ruby>を<ruby>吹<rp> (</rp><rt>ふ</rt><rp>) </rp></ruby>き込むよ</p></blockquote><ul><li><strong><ruby>数<rp> (</rp><rt>かず</rt><rp>) </rp></ruby></strong>　数目</li><li><strong><ruby>訪<rp> (</rp><rt>おとず</rt><rp>) </rp></ruby>れる</strong>　访问</li><li><strong><ruby>萎<rp> (</rp><rt>しぼ</rt><rp>) </rp></ruby>む</strong>/<strong><ruby>凋<rp> (</rp><rt>しぼ</rt><rp>) </rp></ruby>む</strong>　瘪,消缩</li><li><strong>風船</strong>　气球</li><li><strong>息を吹き込む</strong>　吹入气体</li></ul><blockquote><p>　lalalaグッバイ<ruby>昨日<rp> (</rp><rt>きのう</rt><rp>) </rp></ruby>の<ruby>私<rp> (</rp><rt>わたし</rt><rp>) </rp></ruby><br>　<ruby>今日<rp> (</rp><rt>きょう</rt><rp>) </rp></ruby>がくる<ruby>度<rp> (</rp><rt>たび</rt><rp>) </rp></ruby>に<ruby>大人<rp> (</rp><rt>おとな</rt><rp>) </rp></ruby>になってく<br>　あの<ruby>日<rp> (</rp><rt>ひ</rt><rp>) </rp></ruby><ruby>見<rp> (</rp><rt>み</rt><rp>) </rp></ruby>た<ruby>花火<rp> (</rp><rt>はなび</rt><rp>) </rp></ruby>のように<br>　きらめく<ruby>日々<rp> (</rp><rt>ひび</rt><rp>) </rp></ruby>　<ruby>大切<rp> (</rp><rt>たいせつ</rt><rp>) </rp></ruby>にするね<br>　ありがとう</p></blockquote><ul><li><strong>度</strong>　每逢,每当</li></ul>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;这首歌出自玉响第一季(たまゆら〜hitotose〜)TV未放送5.5话,是在网易云听到这首歌去补的玉响。玉响是个个人觉得不错的治愈番。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="たまゆら" scheme="https://www.hoboro.top/categories/%E3%81%9F%E3%81%BE%E3%82%86%E3%82%89/"/>
+    
+    
+    <category term="日语" scheme="https://www.hoboro.top/tags/%E6%97%A5%E8%AF%AD/"/>
+    
+    <category term="二次元" scheme="https://www.hoboro.top/tags/%E4%BA%8C%E6%AC%A1%E5%85%83/"/>
+    
+  </entry>
+  
+  <entry>
     <title>文件Hash计算</title>
-    <link href="https://chen-yixin.github.io/2020/11/01/file-hash/"/>
-    <id>https://chen-yixin.github.io/2020/11/01/file-hash/</id>
+    <link href="https://www.hoboro.top/2020/11/01/file-hash/"/>
+    <id>https://www.hoboro.top/2020/11/01/file-hash/</id>
     <published>2020-11-01T08:02:01.000Z</published>
     <updated>2021-01-02T11:16:43.781Z</updated>
     
@@ -30,21 +101,21 @@
     
     
     
-    <category term="教程文档" scheme="https://chen-yixin.github.io/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
+    <category term="教程文档" scheme="https://www.hoboro.top/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
     
     
-    <category term="Linux" scheme="https://chen-yixin.github.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://www.hoboro.top/tags/Linux/"/>
     
-    <category term="Windows" scheme="https://chen-yixin.github.io/tags/Windows/"/>
+    <category term="Windows" scheme="https://www.hoboro.top/tags/Windows/"/>
     
-    <category term="macOS" scheme="https://chen-yixin.github.io/tags/macOS/"/>
+    <category term="macOS" scheme="https://www.hoboro.top/tags/macOS/"/>
     
   </entry>
   
   <entry>
     <title>iptables</title>
-    <link href="https://chen-yixin.github.io/2020/11/01/iptables/"/>
-    <id>https://chen-yixin.github.io/2020/11/01/iptables/</id>
+    <link href="https://www.hoboro.top/2020/11/01/iptables/"/>
+    <id>https://www.hoboro.top/2020/11/01/iptables/</id>
     <published>2020-11-01T06:46:38.000Z</published>
     <updated>2021-01-02T11:16:43.782Z</updated>
     
@@ -55,17 +126,17 @@
     
     
     
-    <category term="教程文档" scheme="https://chen-yixin.github.io/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
+    <category term="教程文档" scheme="https://www.hoboro.top/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
     
     
-    <category term="Linux" scheme="https://chen-yixin.github.io/tags/Linux/"/>
+    <category term="Linux" scheme="https://www.hoboro.top/tags/Linux/"/>
     
   </entry>
   
   <entry>
     <title>Hexo文章发布</title>
-    <link href="https://chen-yixin.github.io/2020/10/24/hexo-wen-zhang-fa-bu/"/>
-    <id>https://chen-yixin.github.io/2020/10/24/hexo-wen-zhang-fa-bu/</id>
+    <link href="https://www.hoboro.top/2020/10/24/hexo-wen-zhang-fa-bu/"/>
+    <id>https://www.hoboro.top/2020/10/24/hexo-wen-zhang-fa-bu/</id>
     <published>2020-10-23T16:00:00.000Z</published>
     <updated>2020-10-24T09:20:14.409Z</updated>
     
@@ -76,10 +147,10 @@
     
     
     
-    <category term="教程文档" scheme="https://chen-yixin.github.io/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
+    <category term="教程文档" scheme="https://www.hoboro.top/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/"/>
     
     
-    <category term="Hexo" scheme="https://chen-yixin.github.io/tags/Hexo/"/>
+    <category term="Hexo" scheme="https://www.hoboro.top/tags/Hexo/"/>
     
   </entry>
   
