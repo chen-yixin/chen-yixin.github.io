@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/img/coffee.png">
+  <title>使用SSH管理Windows | ほぼろ</title>
+  <meta name="author" content="Chen Yixin" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="SSH, Windows" />
+  
+  <meta name="description" content="网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用SSH管理Windows">
+<meta property="og:url" content="https://www.hoboro.top/2021/01/09/ssh-windows/index.html">
+<meta property="og:site_name" content="ほぼろ">
+<meta property="og:description" content="网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.hoboro.top/2021/01/09/ssh-windows/http:/img.hoboro.top/picgo/20210109190949.png">
+<meta property="article:published_time" content="2021-01-09T12:44:23.000Z">
+<meta property="article:modified_time" content="2021-11-28T11:54:17.999Z">
+<meta property="article:author" content="Chen Yixin">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="SSH">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.hoboro.top/2021/01/09/ssh-windows/http:/img.hoboro.top/picgo/20210109190949.png">
+<meta name="twitter:site" content="@null">
+  
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="GGzdbKARdR7XmYgmN-N7CWguzIot2DNs6WyWw0Kz324" />
+    
+    
+      <meta name="baidu-site-verification" content="code-9Zpp9s4a9W" />
+    
+    
+      <meta name="msvalidate.01" content="4D923DD1D15383E2776808E423615827" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" type="text/css" media="all">
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" type="text/css" media="all">
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" type="text/css" media="all">
+  <link rel="stylesheet" id="nprogress-css" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" type="text/css" media="all">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+  
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-dark.min.css" type="text/css" media="all">
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="ほぼろ" type="application/atom+xml">
+</head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                        <li><a href="/"><i class="fa fa-home"></i>首页</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/archives/"><i class="fa fa-file"></i>档案馆</a></li>
+                                    
+                                
+                                    
+                                        <li>
+                                            <a><i class="fa fa-link"></i>链接</a>
+                                            <ul class="sub-menu">
+                                                
+                                                    
+                                                
+                                                    
+                                                        <li><a href="https://www.hoboro.top/">作者博客</a></li>
+                                                    
+                                                
+                                                    
+                                                        <li><a target="_blank" rel="noopener" href="https://github.com/Candinya/Kratos-Rebirth">项目链接</a></li>
+                                                    
+                                                
+                                            </ul>
+                                        </li>
+                                    
+                                
+                                    
+                                        <li><a href="/friends/"><i class="fa fa-paw"></i>好伙伴</a></li>
+                                    
+                                
+                                    
+                                        <li><a href="/about/"><i class="fa fa-paper-plane"></i>关于</a></li>
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">ほぼろ</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>ほぼろ</h2> <br />
+                        <span>~心に灯す竹あかり、なので~</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article>
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center">使用SSH管理Windows</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><i class="fa fa-calendar"></i> 2021-01-09</li>
+                <li><i class="fa fa-user"></i> 作者 Chen Yixin</li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~1.78K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                本文最后编辑于 <time datetime="1638100457999"></time> 前，其中的内容可能需要更新。
+            </div>
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85OpenSSH-Server"><span class="toc-number">1.</span> <span class="toc-text">安装OpenSSH Server</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="toc-number">1.1.</span> <span class="toc-text">图形界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PowerShell%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">PowerShell方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E8%AE%A4OpenSSH%E5%8F%AF%E7%94%A8%E4%BA%8E%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.1.</span> <span class="toc-text">确认OpenSSH可用于安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85OpenSSH-Server-1"><span class="toc-number">1.2.2.</span> <span class="toc-text">安装OpenSSH Server</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenSSH-Server-%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">OpenSSH Server 服务配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E3%80%81%E9%98%B2%E7%81%AB%E5%A2%99%E7%9B%B8%E5%85%B3"><span class="toc-number">2.1.</span> <span class="toc-text">服务、防火墙相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AF%86%E9%92%A5%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="toc-number">2.2.</span> <span class="toc-text">配置密钥免密登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89-%E9%85%8D%E7%BD%AEPowerShell%E4%BD%9C%E4%B8%BASSH%E8%BF%9E%E6%8E%A5%E9%BB%98%E8%AE%A4SHELL"><span class="toc-number">2.3.</span> <span class="toc-text">(可选)配置PowerShell作为SSH连接默认SHELL</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <p>网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务</p>
+<a id="more"></a>
+
+<ul>
+<li>根据微软文档描述,适用于Windows 10 1809 或 Windows Server 2019以上版本</li>
+<li>以下内容如果无特别说明,在远程Windows主机上操作</li>
+</ul>
+<h1 id="安装OpenSSH-Server"><a href="#安装OpenSSH-Server" class="headerlink" title="安装OpenSSH Server"></a>安装OpenSSH Server</h1><h2 id="图形界面"><a href="#图形界面" class="headerlink" title="图形界面"></a>图形界面</h2><p>点开 <strong>设置</strong> -&gt; <strong>应用</strong> -&gt; <strong>应用与功能</strong> -&gt; <strong>可选功能</strong></p>
+<p><img src="http://img.hoboro.top/picgo/20210109193605.png"></p>
+<p>点击 <strong>添加功能</strong> 后跳出对话框,输入”ssh”,勾选安装”OpenSSH 服务器”</p>
+<p><img src="http://img.hoboro.top/picgo/20210109193825.png"></p>
+<h2 id="PowerShell方式"><a href="#PowerShell方式" class="headerlink" title="PowerShell方式"></a>PowerShell方式</h2><p>以下操作需要<strong>管理员</strong>权限</p>
+<h3 id="确认OpenSSH可用于安装"><a href="#确认OpenSSH可用于安装" class="headerlink" title="确认OpenSSH可用于安装"></a>确认OpenSSH可用于安装</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-WindowsCapability</span> <span class="literal">-Online</span> | ? Name <span class="operator">-like</span> <span class="string">&#x27;OpenSSH*&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><em>输出以下内容</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name  : OpenSSH.Client~~~~0.0.1.0</span><br><span class="line">State : Installed</span><br><span class="line"></span><br><span class="line">Name  : OpenSSH.Server~~~~0.0.1.0</span><br><span class="line">State : NotPresent</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装OpenSSH-Server-1"><a href="#安装OpenSSH-Server-1" class="headerlink" title="安装OpenSSH Server"></a>安装OpenSSH Server</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Add-WindowsCapability</span> <span class="literal">-Online</span> <span class="literal">-Name</span> OpenSSH.Server~~~~<span class="number">0.0</span>.<span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+
+<p><em>输出以下内容</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Path          :</span><br><span class="line">Online        : True</span><br><span class="line">RestartNeeded : False</span><br></pre></td></tr></table></figure>
+
+<h1 id="OpenSSH-Server-服务配置"><a href="#OpenSSH-Server-服务配置" class="headerlink" title="OpenSSH Server 服务配置"></a>OpenSSH Server 服务配置</h1><p>以下操作需要<strong>管理员</strong>权限</p>
+<h2 id="服务、防火墙相关"><a href="#服务、防火墙相关" class="headerlink" title="服务、防火墙相关"></a>服务、防火墙相关</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启服务</span></span><br><span class="line"><span class="built_in">Start-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置自启动</span></span><br><span class="line"><span class="built_in">Set-Service</span> <span class="literal">-Name</span> sshd <span class="literal">-StartupType</span> <span class="string">&#x27;Automatic&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看状态</span></span><br><span class="line"><span class="built_in">Get-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment">#关闭服务</span></span><br><span class="line"><span class="built_in">Stop-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务</span></span><br><span class="line"><span class="built_in">Restart-Service</span> sshd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确认防火墙是放开的</span></span><br><span class="line"><span class="built_in">Get-NetFirewallRule</span> <span class="literal">-Name</span> *ssh*</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>确认<code>OpenSSH-Server-In-TCP</code>状态是 <code>enabled</code></li>
+<li>至此可以在本地尝试<code>ssh username@ip</code>连接到远程机器</li>
+</ol>
+<h2 id="配置密钥免密登录"><a href="#配置密钥免密登录" class="headerlink" title="配置密钥免密登录"></a>配置密钥免密登录</h2><p><strong>↓本地执行</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 生成密钥对</span></span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 找到公钥文件,复制内容备用</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Windows</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> %HOMEPATH%\.ssh\id_rsa.pub</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Linux</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="variable">$HOME</span>/.ssh/id_rsa.pu</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>↑本地执行 | 远程执行↓</strong></p>
+<ol>
+<li>打开文件<code>%HOMEPATH%\.ssh\authorized_keys</code></li>
+<li>把公钥文件添加到上述文件末尾</li>
+<li>修改文件<code>C:\ProgramData\ssh\sshd_config</code>,内容如下</li>
+<li>重启服务<code>Restart-Service sshd</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">C:\ProgramData\ssh\sshd_config</span><br><span class="line">确保以下3条没有被注释</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile    .ssh&#x2F;authorized_keys</span><br><span class="line"></span><br><span class="line">确保以下2条有注释掉</span><br><span class="line"># Match Group administrators</span><br><span class="line">#       AuthorizedKeysFile __PROGRAMDATA__&#x2F;ssh&#x2F;administrators_authorized_keys</span><br></pre></td></tr></table></figure>
+
+<h2 id="可选-配置PowerShell作为SSH连接默认SHELL"><a href="#可选-配置PowerShell作为SSH连接默认SHELL" class="headerlink" title="(可选)配置PowerShell作为SSH连接默认SHELL"></a>(可选)配置PowerShell作为SSH连接默认SHELL</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 管理员运行</span></span><br><span class="line"><span class="built_in">New-ItemProperty</span> <span class="literal">-Path</span> <span class="string">&quot;HKLM:\SOFTWARE\OpenSSH&quot;</span> <span class="literal">-Name</span> DefaultShell <span class="literal">-Value</span> <span class="string">&quot;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe&quot;</span> <span class="literal">-PropertyType</span> String <span class="literal">-Force</span></span><br><span class="line"><span class="built_in">Restart-Service</span> sshd</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows-server/administration/openssh/openssh_server_configuration">适用于 Windows 10 1809 和 Server 2019 的 OpenSSH 服务器配置</a></p>
+
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5>本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "https://www.hoboro.top/2021/01/09/ssh-windows/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "https://www.hoboro.top/2021/01/09/ssh-windows/";
+            const title         = "「使用SSH管理Windows」";
+            const excerpt       = `网上有很多关于使用win10-ssh客户端登录linux-ssh服务端的介绍，但很少介绍多台win10-ssh服务端之间互访的。以下记录如何免密登录win10-ssh服务`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/SSH/" rel="tag">SSH</a>, <a class="tag-none-link" href="/tags/Windows/" rel="tag">Windows</a>
+                </div>
+                <div class="pull-date">
+                <span>最后编辑：2021-11-28</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" (无标题)" href="/2021/01/06/20210106/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" (无标题)" href="/2021/01/10/20210110/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <div class="post-comments lazy-load">
+    <div id="tcomment"></div>
+</div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            twikoo.init({ envId: 'twikoo-4gtbybwrccc56106', el: '#tcomment' });
+        }
+        if (typeof twikoo == 'undefined') {
+            const src = 'https://cdn.jsdelivr.net/npm/twikoo@latest/dist/twikoo.all.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://twikoo.js.org/">comments powered by Twikoo.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+        <div class="sticky-area">
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="http://img.hoboro.top/picgo/20210320163030.jpg" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">分分秒秒 时时刻刻 朝朝暮暮</p>
+    </div>
+</aside>
+            
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar"></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85OpenSSH-Server"><span class="toc-text">安装OpenSSH Server</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2"><span class="toc-text">图形界面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PowerShell%E6%96%B9%E5%BC%8F"><span class="toc-text">PowerShell方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AE%E8%AE%A4OpenSSH%E5%8F%AF%E7%94%A8%E4%BA%8E%E5%AE%89%E8%A3%85"><span class="toc-text">确认OpenSSH可用于安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85OpenSSH-Server-1"><span class="toc-text">安装OpenSSH Server</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenSSH-Server-%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="toc-text">OpenSSH Server 服务配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E3%80%81%E9%98%B2%E7%81%AB%E5%A2%99%E7%9B%B8%E5%85%B3"><span class="toc-text">服务、防火墙相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AF%86%E9%92%A5%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95"><span class="toc-text">配置密钥免密登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89-%E9%85%8D%E7%BD%AEPowerShell%E4%BD%9C%E4%B8%BASSH%E8%BF%9E%E6%8E%A5%E9%BB%98%E8%AE%A4SHELL"><span class="toc-text">(可选)配置PowerShell作为SSH连接默认SHELL</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E3%81%9F%E3%81%BE%E3%82%86%E3%82%89/">たまゆら</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8A%A8%E6%80%81/">动态</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%99%E7%A8%8B%E6%96%87%E6%A1%A3/">教程文档</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%B8%E8%AE%B0/">游记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%BD%AF%E8%80%83/">软考</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%9F%B3%E4%B9%90/">音乐</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/Hexo/" style="font-size: 0.7em;">Hexo</a> <a href="/tags/Linux/" style="font-size: 0.7em;">Linux</a> <a href="/tags/SSH/" style="font-size: 0.7em;">SSH</a> <a href="/tags/Windows/" style="font-size: 0.8em;">Windows</a> <a href="/tags/macOS/" style="font-size: 0.6em;">macOS</a> <a href="/tags/%E4%BA%8C%E6%AC%A1%E5%85%83/" style="font-size: 0.7em;">二次元</a> <a href="/tags/%E5%8A%A8%E6%80%81/" style="font-size: 0.8em;">动态</a> <a href="/tags/%E6%97%A5%E8%AF%AD/" style="font-size: 0.6em;">日语</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%E5%B8%88/" style="font-size: 0.7em;">网络工程师</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2021/11/07/rdp-file/"><i class="fa  fa-book"></i> RDP连接保存用户名和密码</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/10/07/ke-le-bo-wu-guan/"><i class="fa  fa-book"></i> 可乐博物馆</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/10/07/miao-pa-si/"><i class="fa  fa-book"></i> 陽だまり道とれんちょん</a>
+            
+          
+        
+          
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/03/28/wang-luo-gong-cheng-shi-7/"><i class="fa  fa-book"></i> 网络工程师-局域网基础</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2021/03/27/wang-luo-gong-cheng-shi-6/"><i class="fa  fa-book"></i> 网络工程师-网络体系结构</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/chen-yixin"><i class="fa fa-github"></i></a></li>
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2021 ほぼろ 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by Chen Yixin.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://marketing.qiniu.com/cps/redirect?redirect_id=4&cps_key=1hhtlnlchjhoy" target="_blank">七牛云</a></li>
+                        </div>
+                        <div>
+                            <li><a href="https://beian.miit.gov.cn" rel="external nofollow" target="_blank">苏ICP备2020060705号</a></li>
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async type="text/javascript" src="/js/snow.min.js"></script>
+    </div>
+
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="6670057627"
+        order="list"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+    <script defer src="/js/kr-dark.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+    <script>
+    // Initialize
+    const init = () => {
+        mermaid.initialize({theme: 'forest'});
+    };
+    const reload = () => {
+        mermaid.init(undefined, ".mermaid");
+    };
+    if (typeof mermaid == 'undefined') {
+        const src = 'https://cdn.jsdelivr.net/npm/mermaid@7.1.2/dist/mermaid.min.js';
+        $.getScript(src, init);
+    }
+    // Set PJAX callback function
+    window.addEventListener('pjax:complete', reload);
+</script>
+
+
+    </body>
+</html>
