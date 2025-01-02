@@ -35,7 +35,7 @@ jobs:
       with:
         path: public
 
-  deploy:
+  deploy-github-page:
     needs: build
     if: startsWith(github.event.ref, 'refs/heads/')
 
@@ -52,3 +52,34 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  deploy-qiniu:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+    - name: Download Hexo build artifact
+      uses: actions/download-artifact@v4
+      with:
+        path: download-artifact
+    - name: Setup Node.js env
+      uses: actions/setup-node@v4
+      with:
+        node-version: 'latest'
+    - name: Install nodejs required
+      run: npm install qiniu glob
+    - name: Upload to Qiniu Cloud Storage
+      env:
+        QINIU_ACCESS_KEY: 
+        QINIU_SECRET_KEY: 
+        QINIU_BUCKET: 
+        QINIU_BUCKET_DOMAIN: 
+      run: >
+        node 
+        upload_qiniu.cjs 
+        ${{ secrets.QINIU_BUCKET }}
+        ${{ secrets.QINIU_ACCESS_KEY }} 
+        ${{ secrets.QINIU_SECRET_KEY }} 
+        ${{ secrets.QINIU_BUCKET_DOMAIN }}
+      shell: bash
