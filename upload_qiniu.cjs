@@ -65,7 +65,7 @@ const main = async () => {
   }
 
   groups.forEach(async(group) => {
-    const urls = [];
+    const urls = [domain];
     for (const filePath of group) {
       if (
         !filePath.startsWith('js/') &&
