@@ -67,7 +67,13 @@ const main = async () => {
   groups.forEach(async(group) => {
     const urls = [];
     for (let filePath of group) {
-      urls.push(`${domain}/${filePath}`);
+      if (
+        !filePath.startsWith('js/') &&
+        !filePath.startsWith('css/') &&
+        !filePath.startsWith('vendors/')
+      ) {
+        urls.push(`${domain}/${filePath}`);
+      }
       await push(filePath, path.join(localDir, filePath));
     }
 
