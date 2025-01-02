@@ -10,7 +10,7 @@ search:
 # 图片配置
 image:
   favicon: "/assets/favicon.png" # 站点图标
-  #avatar: "/assets/logo.webp" # 个人信息挂件上的头像
+  avatar: "http://img.hoboro.top/picgo/20210320163030.jpg"
   banner:
     light: "https://dev.krt.moe/demo-assets/banner.webp"
     dark: "https://dev.krt.moe/demo-assets/banner_dark.webp"
@@ -41,18 +41,19 @@ nav:
 footer:
   links:
     - icon: github
-      link: https://github.com/kratos-rebirth
+      link: https://github.com/chen-yixin
     - icon: rss
       link: /atom.xml
   components:
     uptime:
-      since: "2018/05/06 17:03:12"
+      since: "2020-10-24 00:00:00"
       text: "本站已在风雨中飘摇"
     author:
-      homepage: "https://github.com/Candinya/Kratos-Rebirth/graphs/contributors"
+      homepage: "https://github.com/chen-yixin/chen-yixin.github.io/graphs/contributors"
     additional: # 托管信息等
       - - 由 <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a> 强力驱动
-        - 在 <a href="https://github.io" target="_blank">Github Pages</a> 暖心托管
+        - 在 <a href="https://marketing.qiniu.com/cps/redirect?redirect_id=4&cps_key=1hhtlnlchjhoy" target="_blank">七牛云</a> 和 <a href="https://github.io" target="_blank">Github Pages</a> 暖心托管
+      - - <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">苏ICP备2020060705号</a>
 
 # 代码高亮
 # syntax_highlighter:
