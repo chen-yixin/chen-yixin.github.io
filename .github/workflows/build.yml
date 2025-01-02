@@ -37,7 +37,7 @@ jobs:
 
   deploy-github-page:
     needs: build
-    if: startsWith(github.event.ref, 'refs/heads/')
+    if: startsWith(github.event.ref, 'refs/heads/main')
 
     permissions:
       pages: write
@@ -55,7 +55,9 @@ jobs:
 
   deploy-qiniu:
     needs: build
+    if: startsWith(github.event.ref, 'refs/heads/main')
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
