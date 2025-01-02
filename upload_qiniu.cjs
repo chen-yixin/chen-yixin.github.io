@@ -66,13 +66,17 @@ const main = async () => {
 
   groups.forEach(async(group) => {
     const urls = [];
-    for (let filePath of group) {
+    for (const filePath of group) {
       if (
         !filePath.startsWith('js/') &&
         !filePath.startsWith('css/') &&
         !filePath.startsWith('vendors/')
       ) {
         urls.push(`${domain}/${filePath}`);
+        if (filePath.startsWith('/index.html')) {
+          const withoutIndex = str.replace(/index\.html$/, '');
+          result.push(withoutIndex);
+        }
       }
       await push(filePath, path.join(localDir, filePath));
     }
