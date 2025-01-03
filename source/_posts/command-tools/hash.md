@@ -3,9 +3,7 @@ title: 文件Hash计算
 date: 2020-11-01 16:02:01
 categories: 命令行工具
 tags:
-  - Linux
-  - Windows
-  - macOS
+  - tools
 sticky: 0
 #cover:
 comments: true
