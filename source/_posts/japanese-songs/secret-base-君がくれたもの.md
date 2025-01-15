@@ -1,5 +1,5 @@
 ---
-title: 天使にふれたよ
+title: secret base~君がくれたもの~
 date: 2020-04-19 22:55:29
 categories: 日语歌
 tags:
@@ -26,7 +26,7 @@ toc: true
   marginheight="0" 
   width=330 
   height=86 
-  src="//music.163.com/outchain/player?type=2&id=33911781&auto=0&height=66"
+  src="//music.163.com/outchain/player?type=2&id=22817150&auto=1&height=66"
 ></iframe>
 
 ## 歌词手记
