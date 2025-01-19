@@ -9,6 +9,7 @@ sticky: 0
 cover: https://pic.imgdb.cn/item/5e70e9b4e83c3a1e3a546bf5.jpg
 comments: true
 toc: true
+permalink: japanese-songs/secret_base
 ---
 
 因为这首音乐去补的未闻花名。
@@ -26,7 +27,7 @@ toc: true
   marginheight="0" 
   width=330 
   height=86 
-  src="//music.163.com/outchain/player?type=2&id=22817150&auto=1&height=66"
+  src="//music.163.com/outchain/player?type=2&id=22817150&auto=0&height=66"
 ></iframe>
 
 ## 歌词手记
