@@ -103,7 +103,7 @@ copyright_notice:
 comments:
   core:
     enable_at:
-    # - index
+      # - index
       - post
       - page
     template:

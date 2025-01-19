@@ -38,11 +38,11 @@ permalink: japanese-songs/secret_base
 - <font color="#00FF80">{%ruby_def 本间|ほんま%}{%ruby_def 芽衣子|めいこ%}　(CV:{%ruby_def 茅野|かやの%}{%ruby_def 愛衣|あい%})</font>
 - <font color="#FFA500">{%ruby_def 安城|あんじょう%}{%ruby_def 鸣子|なるこ%}　　(CV:{%ruby_def 戸松|とまつ%}{%ruby_def 遥|はるか%})</font>
 - <font color="#8A2BE2">{%ruby_def 鹤见|つるみ%}{%ruby_def 知利子|ちりこ%}　(CV:{%ruby_def 早見|はやみ%}{%ruby_def 沙織|さおり%})
-</font>
+  </font>
 
 {% endalertpanel %}
 
-- 君が**くれた**もの　〜が(〜に)くれる A给B(说话人)东西
+- 君が**くれた**もの　〜が(〜に)くれる A 给 B(说话人)东西
 
 {% alertpanel info "歌词原文" %}
 
@@ -152,7 +152,7 @@ permalink: japanese-songs/secret_base
 
 {% endalertpanel %}
 
-- 同第1段
+- 同第 1 段
 
 {% alertpanel info "歌词原文" %}
 

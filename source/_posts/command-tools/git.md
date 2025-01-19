@@ -77,7 +77,7 @@ Host github.com
 
 {% endalertpanel %}
 
-Windows: 修改`%HOMEPATH%\.ssh\config`,不存在则新建(connect.exe已随git一同安装)
+Windows: 修改`%HOMEPATH%\.ssh\config`,不存在则新建(connect.exe 已随 git 一同安装)
 
 ```
 Host github.com
@@ -99,8 +99,7 @@ Host github.com
 
 {% endalertpanel %}
 
-
-windows使用需要使用用户名密码的HTTP代理服务情况下
+windows 使用需要使用用户名密码的 HTTP 代理服务情况下
 
 ```
 Host github.com

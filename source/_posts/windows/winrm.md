@@ -10,23 +10,22 @@ comments: true
 toc: true
 ---
 
-WinRM远程命令行服务的开启,用于后续使用`pywinrm`执行远程命令使用
+WinRM 远程命令行服务的开启,用于后续使用`pywinrm`执行远程命令使用
 
 <!-- more -->
 
-**重要**: 本文命令全部是管理员cmd窗口,如果不是cmd或不是管理员权限打开的,可能无法成功执行
+**重要**: 本文命令全部是管理员 cmd 窗口,如果不是 cmd 或不是管理员权限打开的,可能无法成功执行
 
 ## 准备工作
 
 `WinRM`服务默认都是未启用的状态,先通过命令行查看状态;
 如果没有返回或返回提示错误信息,则没有启动
 
-
 ```bat
 winrm enumerate winrm/config/listener
 ```
 
-## 开启WinRM服务
+## 开启 WinRM 服务
 
 ```bat
 winrm quickconfig
@@ -37,7 +36,7 @@ winrm quickconfig
 winrm enumerate winrm/config/listener
 ```
 
-## 为WinRM配置Auth
+## 为 WinRM 配置 Auth
 
 ```bat
 ;basic方式登录验证
@@ -47,18 +46,18 @@ winrm set winrm/config/service/auth @{Basic="true"}
 winrm set winrm/config/service @{AuthUnencrypted="true"}
 ```
 
-## pywimrm登录验证
+## pywimrm 登录验证
 
 ```python
 >>> import winrm
 >>> session = winrm.Session('<IP>', auth=('<username>', '<password>'))
 >>> r = session.run_cmd('echo 1')
->>> r.std_out 
+>>> r.std_out
 b'1\r\n'
 ```
 
 ## 尾巴
 
-至此,适用pywinrm的WinRM服务已配置完毕
-其他用途的,例如设备A通过PowerShell远程登录设备B,以上设置可能还不可用
-对于需要适用加密方式的,需要在防火墙中,入站规则的5986端口开启
+至此,适用 pywinrm 的 WinRM 服务已配置完毕
+其他用途的,例如设备 A 通过 PowerShell 远程登录设备 B,以上设置可能还不可用
+对于需要适用加密方式的,需要在防火墙中,入站规则的 5986 端口开启
