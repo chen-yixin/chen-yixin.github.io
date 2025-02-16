@@ -5,7 +5,7 @@ import {
 import { pageviewCount } from "https://unpkg.com/@waline/client@v3/dist/pageview.js";
 
 (() => {
-  const serverURL = "hoboro-waline.vercel.app";
+  const serverURL = "waline.hoboro.top";
   let firstVisit = true;
 
   const loadComments = async () => {
