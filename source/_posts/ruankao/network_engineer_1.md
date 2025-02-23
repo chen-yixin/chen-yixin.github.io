@@ -9,7 +9,7 @@ tags:
 cover: //img.hoboro.top/picgo/20210320181828.png?imageView2/0/w/240/h/145
 ---
 
-软考中级 > 网络工程师 > -计算机硬件基础
+软考中级 > 网络工程师 > 1.计算机硬件基础
 
 <!-- more -->
 
