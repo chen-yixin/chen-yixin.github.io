@@ -42,6 +42,8 @@ footer:
   links:
     - icon: github
       link: https://github.com/chen-yixin
+    - icon: envelope
+      link: mailto:i@hoboro.top
     - icon: rss
       link: /atom.xml
   components:
