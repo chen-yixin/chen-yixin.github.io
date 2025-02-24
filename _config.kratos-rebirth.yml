@@ -32,7 +32,7 @@ nav:
       submenu:
         - label: 代码仓库
           icon: code
-          url: https://github.com/Candinya/Kratos-Rebirth
+          url: https://github.com/chen-yixin/chen-yixin.github.io
         - label: 项目文档
           icon: book
           url: https://wiki.krt.moe

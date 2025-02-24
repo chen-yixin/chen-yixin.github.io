@@ -16,10 +16,14 @@ TODO
 
 ## 认证
 
+- AWS Certified Advanced Networking - Specialty
+- 阿里云云计算高级工程师 ACP
+- CDA Level-1
+
 <div style="display: flex; justify-content: space-between;">
-  <img src="/assets/aws-ans.png" alt="AWS Certified Advanced Networking - Specialty" style="height: 100px;">
-  <img src="/assets/aliyun-acp.png" alt="阿里云ACP云计算" style="height: 100px;">
-  <img src="/assets/cda-1.png" alt="CDA Level-1" style="height: 100px;">
+  <img src="//img.hoboro.top/badge/aws-ans.png?imageslim" style="height: 100px;">
+  <img src="//img.hoboro.top/badge/aliyun-acp.png?imageslim" style="height: 100px;">
+  <img src="//img.hoboro.top/badge/cda-1.png?imageslim" style="height: 100px;">
 </div>
 
 ## 技能
