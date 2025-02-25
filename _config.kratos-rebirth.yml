@@ -36,9 +36,9 @@ nav:
         - label: 项目文档
           icon: book
           url: https://wiki.krt.moe
-    - label: 简历
-      icon: file-code-o
-      url: /resume/
+    # - label: 简历
+    #   icon: file-code-o
+    #   url: /resume/
 
 # Footer 页脚配置
 footer:
