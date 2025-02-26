@@ -85,6 +85,14 @@ share:
   title: "分享这一刻"
   message: "让朋友们也来瞅瞅！"
   platforms:
+    - name: "QQ"
+      icon: "qq"
+      color: "#00bfff"
+      link: "https://connect.qq.com/widget/shareqq/index.html?url=$URL&title=$TITLE&desc=&summary=$SUMMARY&site=$SITE"
+    - name: "QQ空间"
+      icon: "star"
+      color: "#fece00"
+      link: "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=$URL&title=$TITLE&desc=&summary=$SUMMARY&site=$SITE"
     - name: "微博"
       icon: "weibo"
       color: "#e6162d"
@@ -98,6 +106,10 @@ share:
         </svg>
       color: "#000"
       link: "https://x.com/intent/tweet?text=$TITLE&url=$URL"
+    - name: "Facebook"
+      icon: "facebook"
+      color: "#3e569b"
+      link: "https://www.facebook.com/sharer/sharer.php?u=$URL"
 
 # 打赏组件设置
 donate:
