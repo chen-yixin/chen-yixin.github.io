@@ -4,7 +4,6 @@ Allow: /
 Allow: /posts/
 
 Disallow: /assets/
-Disallow: /comments/
 Disallow: /images/
 Disallow: /vendors/
 
