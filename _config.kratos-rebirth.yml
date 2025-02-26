@@ -176,9 +176,9 @@ visit_count:
 additional_injections:
   head: |
     <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
-    <link rel="stylesheet" href="/vendors/waline.css" />
+    <link rel="stylesheet" href="/extentions/waline.css" />
   footer: ""
   after_footer: |
-    <script defer type="module" src="/vendors/waline.js"></script>
+    <script defer type="module" src="/extentions/waline.js"></script>
     <script src='https://unpkg.com/mermaid/dist/mermaid.min.js'></script>
-    <script src="/vendors/mermaid.js"></script>
+    <script src="/extentions/mermaid.js"></script>

@@ -6,6 +6,7 @@ Allow: /posts/
 Disallow: /assets/
 Disallow: /images/
 Disallow: /vendors/
+Disallow: /extentions/
 
 Disallow: /js/
 Disallow: /css/
