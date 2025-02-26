@@ -24,6 +24,9 @@ nav:
     - label: 首页
       icon: home
       url: /
+    - label: 检索
+      icon: search
+      url: /search/
     - label: 档案馆
       icon: file
       url: /archives/

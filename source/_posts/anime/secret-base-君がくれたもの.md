@@ -9,7 +9,7 @@ sticky: 0
 cover: https://pic.imgdb.cn/item/5e70e9b4e83c3a1e3a546bf5.jpg
 comments: true
 toc: true
-permalink: japanese-songs/secret_base
+permalink: posts/anime/secret_base
 ---
 
 因为这首音乐去补的未闻花名。
