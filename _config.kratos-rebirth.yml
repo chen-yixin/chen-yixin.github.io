@@ -30,8 +30,12 @@ nav:
     - label: 档案馆
       icon: file
       url: /archives/
-    - label: 链接
+    # - label: 简历
+    #   icon: file-code-o
+    #   url: /resume/
+    - label: 其他链接
       icon: link
+      float_right: true
       submenu:
         - label: 代码仓库
           icon: code
@@ -39,9 +43,6 @@ nav:
         - label: 项目文档
           icon: book
           url: https://wiki.krt.moe
-    # - label: 简历
-    #   icon: file-code-o
-    #   url: /resume/
 
 # Footer 页脚配置
 footer:
@@ -163,7 +164,9 @@ visit_count:
 additional_injections:
   head: |
     <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
-    <link rel="stylesheet" href="/comments/waline.css" />
+    <link rel="stylesheet" href="/extentions/waline.css" />
   footer: ""
   after_footer: |
-    <script defer type="module" src="/comments/waline.js"></script>
+    <script defer type="module" src="/extentions/waline.js"></script>
+    <script src='https://unpkg.com/mermaid/dist/mermaid.min.js'></script>
+    <script src="/extentions/mermaid.js"></script>
