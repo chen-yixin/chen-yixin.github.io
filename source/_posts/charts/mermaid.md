@@ -37,7 +37,7 @@ yarn add hexo-filter-mermaid-diagrams
    - 后面接上`mermaid `
    - 最后再加 3 个反引号
 1. 例如
-   ![](//img.hoboro.top/picgo/20210327214322.png?imageslim)
+   ![](//img.hoboro.top/picgo/20210327214322.png)
 
 ## 流程图 flowchart
 

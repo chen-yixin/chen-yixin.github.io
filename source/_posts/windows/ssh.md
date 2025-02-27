@@ -23,11 +23,11 @@ toc: true
 
 点开 **设置** -> **应用** -> **应用与功能** -> **可选功能**
 
-![](//img.hoboro.top/picgo/20210109193605.png?imageslim)
+![](//img.hoboro.top/picgo/20210109193605.png)
 
 点击 **添加功能** 后跳出对话框,输入"ssh",勾选安装"OpenSSH 服务器"
 
-![](//img.hoboro.top/picgo/20210109193825.png?imageslim)
+![](//img.hoboro.top/picgo/20210109193825.png)
 
 ## PowerShell 方式
 

@@ -21,9 +21,9 @@ TODO
 - CDA Level-1
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="//img.hoboro.top/badge/aws-ans.png?imageslim" style="height: 100px;">
-  <img src="//img.hoboro.top/badge/aliyun-acp.png?imageslim" style="height: 100px;">
-  <img src="//img.hoboro.top/badge/cda-1.png?imageslim" style="height: 100px;">
+  <img src="//img.hoboro.top/badge/aws-ans.png" style="height: 100px;">
+  <img src="//img.hoboro.top/badge/aliyun-acp.png" style="height: 100px;">
+  <img src="//img.hoboro.top/badge/cda-1.png" style="height: 100px;">
 </div>
 
 ## 技能

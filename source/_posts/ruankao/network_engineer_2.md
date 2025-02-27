@@ -37,7 +37,7 @@ cover: //img.hoboro.top/picgo/20210320181828.png?imageView2/0/w/240/h/145
 - 就绪
 - 等待
 
-![](//img.hoboro.top/picgo/20210321123431.png?imageslim)
+![](//img.hoboro.top/picgo/20210321123431.png)
 
 ### 死锁问题
 
@@ -99,7 +99,7 @@ cover: //img.hoboro.top/picgo/20210320181828.png?imageView2/0/w/240/h/145
 - 内存中 使用物理地址
 - 页式存储解决逻辑地址、物理地址分离
 
-![](//img.hoboro.top/picgo/20210321125434.png?imageslim)
+![](//img.hoboro.top/picgo/20210321125434.png)
 
 ### 页面置换算法
 

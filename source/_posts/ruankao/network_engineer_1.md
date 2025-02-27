@@ -44,7 +44,7 @@ cover: //img.hoboro.top/picgo/20210320181828.png?imageView2/0/w/240/h/145
   - 地址总线
   - 控制总线
 
-![](//img.hoboro.top/picgo/20210320171816.png?imageslim)
+![](//img.hoboro.top/picgo/20210320171816.png)
 
 ### 寻址方式
 
@@ -60,7 +60,7 @@ cover: //img.hoboro.top/picgo/20210320181828.png?imageView2/0/w/240/h/145
   - 寄存器寻址
   - 寄存器间接寻址
 
-![](//img.hoboro.top/picgo/20210320171857.png?imageslim)
+![](//img.hoboro.top/picgo/20210320171857.png)
 
 ### 指令集
 
@@ -73,7 +73,7 @@ cover: //img.hoboro.top/picgo/20210320181828.png?imageView2/0/w/240/h/145
 
 ### 流水线
 
-![](//img.hoboro.top/picgo/20210320173758.png?imageslim)
+![](//img.hoboro.top/picgo/20210320173758.png)
 
 - 指令执行流程: 取值 -> 分析 -> 执行
 - 多条指令执行方式
@@ -102,7 +102,7 @@ cover: //img.hoboro.top/picgo/20210320181828.png?imageView2/0/w/240/h/145
   - ROM 掉电不丢失
 - 辅存 - 硬盘...
 
-![](//img.hoboro.top/picgo/20210320174627.png?imageslim)
+![](//img.hoboro.top/picgo/20210320174627.png)
 
 ### 存储器的存取方式
 
@@ -189,8 +189,8 @@ cover: //img.hoboro.top/picgo/20210320181828.png?imageView2/0/w/240/h/145
     - 系统性能提升
     - 自愈合
 
-![](//img.hoboro.top/picgo/20210320181134.png?imageslim)
+![](//img.hoboro.top/picgo/20210320181134.png)
 
 ## 可靠性
 
-![](//img.hoboro.top/picgo/20210320181228.png?imageslim)
+![](//img.hoboro.top/picgo/20210320181228.png)

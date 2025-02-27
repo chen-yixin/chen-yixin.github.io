@@ -69,11 +69,11 @@ cover: //img.hoboro.top/picgo/20210320181828.png?imageView2/0/w/240/h/145
 - 时间管理(进度管理)
   - 甘特图(Gantt 图)
     - 无法看到各个任务之间的依赖关系
-      ![](//img.hoboro.top/picgo/20210321152140.png?imageslim)
+      ![](//img.hoboro.top/picgo/20210321152140.png)
   - 计划评审图(PERT 图)
     - 最短工期(关键路径,开始->结束历时最长的路径)
     - 最晚开工时间
     - 最晚开工时间
     - 松弛时间 = 最晚开工时间 - 最晚开工时间
     - 松弛时间 = 关键路径时间 - 包含该活动的最长路径时间
-      ![](//img.hoboro.top/picgo/20210321152222.png?imageslim)
+      ![](//img.hoboro.top/picgo/20210321152222.png)
