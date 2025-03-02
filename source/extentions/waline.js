@@ -20,6 +20,11 @@ import { pageviewCount } from "https://unpkg.com/@waline/client@v3/dist/pageview
         serverURL,
         pageview: true,
         comment: true,
+        emoji: [
+          "https://unpkg.com/@waline/emojis@1.2.0/bilibili",
+          "https://unpkg.com/@waline/emojis@1.2.0/bmoji",
+        ],
+        reaction: false,
       });
     } else {
       // 是首页，只展示页面访问和评论数量，不渲染评论区
