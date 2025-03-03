@@ -25,6 +25,9 @@ import { pageviewCount } from "https://unpkg.com/@waline/client@v3/dist/pageview
           "https://unpkg.com/@waline/emojis@1.2.0/bmoji",
         ],
         reaction: false,
+        locale: {
+          placeholder: "欢迎留言。（填写邮箱，可在被回复时收到邮件提醒）",
+        },
       });
     } else {
       // 是首页，只展示页面访问和评论数量，不渲染评论区
