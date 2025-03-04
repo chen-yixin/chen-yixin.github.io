@@ -5,7 +5,7 @@ categories: 系统服务
 tags:
   - tools
 sticky: 0
-cover: "http://img.hoboro.top/picgo/20210109190949.png"
+cover: //img.hoboro.top/picgo/20210109190949.png?imageView2/0/w/240/h/145
 comments: true
 toc: true
 ---

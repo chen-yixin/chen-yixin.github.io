@@ -6,7 +6,7 @@ tags:
   - 日语
   - 二次元
 sticky: 0
-cover: https://pic.imgdb.cn/item/5e70e9b4e83c3a1e3a546bf5.jpg
+cover: //img.hoboro.top/picgo/202503042049905.jpg?imageView2/0/w/240/h/145
 comments: true
 toc: true
 permalink: posts/anime/secret_base
