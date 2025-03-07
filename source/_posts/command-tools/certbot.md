@@ -1,6 +1,6 @@
 ---
 title: 使用 Let’s Encrypt 签发证书
-date: 2025-02-23 17：00：00
+date: 2025-02-23
 categories: 命令行工具
 tags:
   - tools
