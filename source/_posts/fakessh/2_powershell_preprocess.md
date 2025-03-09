@@ -37,7 +37,7 @@ fakessh 服务每启动一次则会新生成一个日志文件。
 
 ```powershell
 # 通过通配符，获得日志文件的路径
-$inputFiles = Get-ChildItem -Path ".\logs" -Filter "fakessh*.log"
+$inputFiles = Get-ChildItem -Path ".\upstream" -Filter "fakessh*.log"
 
 # 遍历文件路径
 foreach ($file in $inputFiles) {
@@ -74,7 +74,7 @@ if ($line -match '^([\d\/]+\s[\d:\.]+)\s([\d\.]+):(\d+)\s?(.*?)\s?(\S*)\s?(\S*)$
 写入到指定路径下的 CSV 文件中
 
 ```powershell
-$outputCsv = ".\outputs\fakessh_ps.csv"
+$outputCsv = ".\downstream\output_2.csv"
 
 $results | Export-Csv -Path $outputCsv -NoTypeInformation -Encoding UTF8
 ```
@@ -85,8 +85,8 @@ PowerShell 代码如下
 
 ```powershell
 # 定义输入文件路径和输出CSV文件路径
-$inputFiles = Get-ChildItem -Path ".\logs" -Filter "fakessh*.log"
-$outputCsv = ".\outputs\fakessh_ps.csv"
+$inputFiles = Get-ChildItem -Path ".\upstream" -Filter "fakessh*.log"
+$outputCsv = ".\downstream\output_2.csv"
 
 # 初始化一个数组来存储结果
 $results = @()
