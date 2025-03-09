@@ -33,7 +33,7 @@ date: 2025-03-08
 获取 log 文件的路径。
 fakessh 服务每启动一次则会新生成一个日志文件。
 使用通配符批量读取文件。
-例如日志文件已放在了`log`路径下。
+例如日志文件已放在了`upstream`路径下。
 
 ```powershell
 # 通过通配符，获得日志文件的路径
@@ -50,7 +50,7 @@ foreach ($file in $inputFiles) {
 ## 日志行解析逻辑
 
 日志按行使用正则表达式解析，生成 Object。
-使用在线工具，例如[嗨正则](https://hiregex.com/)测出一个匹配的正则表达式。
+使用在线工具，例如[嗨正则](https://hiregex.com/)，测出一个匹配的正则表达式。
 正则表达式如下：`^([\d\/]+\s[\d:\.]+)\s([\d\.]+):(\d+)\s?(.*?)\s?(\S*)\s?(\S*)$`。
 
 ```powershell
@@ -71,7 +71,7 @@ if ($line -match '^([\d\/]+\s[\d:\.]+)\s([\d\.]+):(\d+)\s?(.*?)\s?(\S*)\s?(\S*)$
 
 ## 输出 CSV 文件
 
-写入到指定路径下的 CSV 文件中
+写入到指定路径`downstream`下的 CSV 文件中
 
 ```powershell
 $outputCsv = ".\downstream\output_2.csv"
