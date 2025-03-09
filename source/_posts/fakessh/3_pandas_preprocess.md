@@ -56,27 +56,20 @@ for filepath in UPSTREAM_DIR.glob('*.log'):
 import re
 pattern = re.compile(r'^([\d/]+\s[\d:.]+)\s([\d.]+):(\d+)\s?(.*?)\s?(\S*)\s?(\S*)$')
 
-all_data = []
+records = []
 for upstream_file in upstream_files:
     with open(upstream_file, 'r', encoding='utf-8') as f:
         for line in f.readlines():
             if match := pattern.match(line):
-                timestamp = match.group(1)
-                ip = match.group(2)
-                port = match.group(3)
-                client = match.group(4)
-                username = match.group(5)
-                password = match.group(6)
-
-                entry = {
-                    'timestamp': timestamp,
-                    'ip': ip,
-                    'port': port,
-                    'client': client,
-                    'username': username,
-                    'password': password,
+                record = {
+                    'timestamp': match.group(1),
+                    'ip': match.group(2),
+                    'port': match.group(3),
+                    'client': match.group(4),
+                    'username': match.group(5),
+                    'password': match.group(6),
                 }
-                all_data.append(entry)
+                records.append(record)
 ```
 
 ## 输出 CSV 文件
@@ -94,8 +87,8 @@ csv_path = DOWNSTREAM_DIR / "output_3.csv"
 with open(csv_path, 'w', newline='', encoding='utf-8') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
-    for entry in all_data:
-        writer.writerow(entry)
+    for record in records:
+        writer.writerow(record)
 ```
 
 ## 尾巴
