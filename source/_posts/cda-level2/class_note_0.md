@@ -8,6 +8,7 @@ date: 2025-03-25
 tags:
   - 数据分析
   - 课程笔记
+cover: //img.hoboro.top/picgo/202503262106764.jpg?imageView2/0/w/240/h/145
 ---
 
 CDA > 课程笔记 > Chap0-课程导读
