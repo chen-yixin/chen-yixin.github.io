@@ -1,5 +1,5 @@
 ---
-title: CDA Level-II 数据化指标体系
+title: CDA Level-II 用户标签体系与用户画像
 categories: CDA
 top: false
 comments: true
@@ -11,7 +11,7 @@ tags:
 cover: //img.hoboro.top/picgo/202503262106764.jpg?imageView2/0/w/240/h/145
 ---
 
-CDA > 课程笔记 > Chap1-数据化指标体系
+CDA > 课程笔记 > Chap1.用户标签体系与用户画像
 
 <!-- more -->
 
