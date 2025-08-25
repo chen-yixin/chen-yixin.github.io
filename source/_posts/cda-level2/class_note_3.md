@@ -1,5 +1,5 @@
 ---
-title: CDA Level-II 数据采集与处理
+title: CDA Level-II 数据模型管理
 categories: CDA
 top: false
 comments: true
