@@ -2,38 +2,37 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Setup Node.js env
-      uses: actions/setup-node@v4
-      with:
-        node-version: 'latest'
+      - name: Setup Node.js env
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
 
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: 9
-        run_install: false
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
 
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Install Hexo environment
-      run: pnpm install
+      - name: Install Hexo environment
+        run: pnpm install --frozen-lockfile
 
-    - name: Hexo build site
-      run: npx hexo generate --force
+      - name: Hexo build site
+        run: npx hexo generate --force
 
-    - name: Upload artifacts for pages
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: public
+      - name: Upload artifacts for pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
 
   deploy-github-page:
     needs: build
@@ -59,29 +58,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
-    - name: Download Hexo build artifact
-      uses: actions/download-artifact@v4
-      with:
-        path: download-artifact
-    - name: Setup Node.js env
-      uses: actions/setup-node@v4
-      with:
-        node-version: 'latest'
-    - name: Install nodejs required
-      run: npm install qiniu glob
-    - name: Upload to Qiniu Cloud Storage
-      env:
-        QINIU_ACCESS_KEY: 
-        QINIU_SECRET_KEY: 
-        QINIU_BUCKET: 
-        QINIU_BUCKET_DOMAIN: 
-      run: >
-        node 
-        upload_qiniu.cjs 
-        ${{ secrets.QINIU_BUCKET }}
-        ${{ secrets.QINIU_ACCESS_KEY }} 
-        ${{ secrets.QINIU_SECRET_KEY }} 
-        ${{ secrets.QINIU_BUCKET_DOMAIN }}
-      shell: bash
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download Hexo build artifact
+        uses: actions/download-artifact@v4
+        with:
+          path: download-artifact
+
+      - name: Setup Node.js env
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Install nodejs required
+        run: npm install qiniu glob
+
+      - name: Upload to Qiniu Cloud Storage
+        env:
+          QINIU_ACCESS_KEY:
+          QINIU_SECRET_KEY:
+          QINIU_BUCKET:
+          QINIU_BUCKET_DOMAIN:
+        run: >
+          node 
+          upload_qiniu.cjs 
+          ${{ secrets.QINIU_BUCKET }}
+          ${{ secrets.QINIU_ACCESS_KEY }} 
+          ${{ secrets.QINIU_SECRET_KEY }} 
+          ${{ secrets.QINIU_BUCKET_DOMAIN }}
+        shell: bash
