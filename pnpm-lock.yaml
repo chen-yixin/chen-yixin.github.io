@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       hexo:
-        specifier: ^8.1.0
-        version: 8.1.0(chokidar@3.6.0)
+        specifier: ^8.1.1
+        version: 8.1.1(chokidar@3.6.0)
       hexo-filter-date-from-git:
         specifier: ^0.2.0
         version: 0.2.0
@@ -737,8 +737,8 @@ packages:
   hexo-zhruby@1.2.0:
     resolution: {integrity: sha512-cn1gDXqkvjbxHK7CIbjpJLlbK8cCE0YcFKgDy/RNo/l0ByvfQORuiwUxljjobxPg6qPFknc5YSxjlI/tMIt0+A==}
 
-  hexo@8.1.0:
-    resolution: {integrity: sha512-4t7oqGBGDfjCk1oFqJaKrzcWzjS7QlPQrP0PGwvsNeEpwjrSMV4pXlcZ3V49j/LGX2UE2NjtDyiYENBQCZFajw==}
+  hexo@8.1.1:
+    resolution: {integrity: sha512-UnzT4ImjKzMMuVRsvudxrl7MkdZwKe4S9xJN5pQPK9c+K0G+fLFb9kB6CqZZwj2E5ne+QK0ls4XMKqTUbNR3RQ==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -2181,7 +2181,7 @@ snapshots:
       - encoding
       - supports-color
 
-  hexo@8.1.0(chokidar@3.6.0):
+  hexo@8.1.1(chokidar@3.6.0):
     dependencies:
       abbrev: 3.0.1
       bluebird: 3.7.2
