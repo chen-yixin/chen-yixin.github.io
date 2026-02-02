@@ -48,8 +48,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       hexo-theme-kratos-rebirth:
-        specifier: 3.0.0
-        version: 3.0.0
+        specifier: 3.0.1
+        version: 3.0.1
       hexo-zhruby:
         specifier: ^1.2.0
         version: 1.2.0
@@ -719,8 +719,8 @@ packages:
     resolution: {integrity: sha512-u4s0ty9Aew6jV+a9oMrXBwhrRpUQ0U8PWM/88a5aHgDru58VY81mVrxOFxs788NAsWQ8OvsJtF5m7mnXoRnSIA==}
     engines: {node: '>=12.13.0'}
 
-  hexo-theme-kratos-rebirth@3.0.0:
-    resolution: {integrity: sha512-on12MGjgSoERrhj4/ZSChOVq19vtd+Z8gCTDlBfM8wH3/a8uVZyYKmEUGz55GFJItYXyDsmOuJgBlG/KD5eV3w==}
+  hexo-theme-kratos-rebirth@3.0.1:
+    resolution: {integrity: sha512-+6c5TKK2MK6LPhT4vgQj1h1nsvCgqW7VR6uGJ/ulzcxLCffMTUQFJB7d4PUIE+AD2LdUM9rLcCS9FqY6yusEmw==}
 
   hexo-util@2.7.0:
     resolution: {integrity: sha512-hQM3h34nhDg0bSe/Tg1lnpODvNkz7h2u0+lZGzlKL0Oufp+5KCAEUX9wal7/xC7ax3/cwEn8IuoU75kNpZLpJQ==}
@@ -1294,6 +1294,7 @@ packages:
   tar@6.2.1:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   through2@4.0.2:
     resolution: {integrity: sha512-iOqSav00cVxEEICeD7TjLB1sueEL+81Wpzp2bY17uZjZN0pWZPuo4suZ/61VujxmqSGFfgOcNuTZ85QJwNZQpw==}
@@ -2141,7 +2142,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  hexo-theme-kratos-rebirth@3.0.0: {}
+  hexo-theme-kratos-rebirth@3.0.1: {}
 
   hexo-util@2.7.0:
     dependencies:
