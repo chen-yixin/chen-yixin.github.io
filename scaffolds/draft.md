@@ -2,6 +2,8 @@
 title: {{ title }}
 categories:
 tags:
+description:
+keywords:
 #sticky:
 #cover:
 comments: true

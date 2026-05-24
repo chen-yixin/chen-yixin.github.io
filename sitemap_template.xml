@@ -8,6 +8,20 @@
     {% elif post.date %}
     <lastmod>{{ post.date.toISOString() }}</lastmod>
     {% endif %}
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  {% endfor %}
+  {% for page in pages %}
+  <url>
+    <loc>{{ page.permalink | uriencode }}</loc>
+    {% if page.updated %}
+    <lastmod>{{ page.updated.toISOString() }}</lastmod>
+    {% elif page.date %}
+    <lastmod>{{ page.date.toISOString() }}</lastmod>
+    {% endif %}
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   {% endfor %}
 </urlset>

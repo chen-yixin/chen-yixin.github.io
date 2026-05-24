@@ -3,6 +3,8 @@ title: {{ title }}
 date: {{ date }}
 categories:
 tags:
+description:
+keywords:
 #sticky:
 #cover:
 comments: true

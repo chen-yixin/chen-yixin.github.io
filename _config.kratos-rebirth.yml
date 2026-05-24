@@ -18,6 +18,20 @@ image:
     light: "//img.hoboro.top/assets/bg.webp"
     dark: "//img.hoboro.top/assets/bg.webp"
 
+# 默认 OG 图片（当文章没有 cover 时使用）
+site_logo: "/assets/favicon.png"
+
+# SEO 配置
+seo:
+  # 百度主动推送 token
+  baidu_push_token: "BMSNG9MDwJ3Wbbok"
+  # Google Search Console 验证 (meta 标签 content 值)
+  google_site_verification: ""
+  # Bing Webmaster 验证
+  bing_site_verification: ""
+  # 百度站长验证
+  baidu_site_verification: ""
+
 # 顶部导航栏配置
 nav:
   items:

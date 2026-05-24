@@ -14,3 +14,4 @@ Disallow: /fonts/
 Disallow: /fancybox/
 
 Sitemap: https://www.hoboro.top/sitemap.xml
+Sitemap: https://www.hoboro.top/baidusitemap.xml
