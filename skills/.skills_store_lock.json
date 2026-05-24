@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "skills": {
+    "hexo-blog-with-seo": {
+      "name": "Hexo Blog with SEO",
+      "zip_url": "https://api.skillhub.cn/api/v1/download?slug=hexo-blog-with-seo",
+      "source": "community",
+      "version": "1.0.5",
+      "installedAt": "2026-05-24T08:18:38Z"
+    }
+  }
+}
