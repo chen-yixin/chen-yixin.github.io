@@ -13,7 +13,7 @@ tags:
 
 随着 OpenWRT 主线逐步从 `opkg` 迁移到 `apk` 作为默认包管理器，最新的快照版和即将发布的 25.xx 版本已全面采用 `apk`。本文记录飞牛 NAS（fnOS）虚拟机部署 OpenWRT 旁路由的过程，并同步适配 apk 包管理命令。
 
-之前写过一篇 [opkg 版部署记录](./fnos_openwt.md)，本文在其基础上更新。
+之前写过一篇 [opkg 版部署记录](/posts/nas/fnos_openwt/)，本文在其基础上更新。
 
 <!-- more -->
 
@@ -207,43 +207,34 @@ apk list -I | grep dnsmasq
 service dnsmasq restart
 ```
 
-## 安装代理工具（以 OpenClash 为例）
+## 安装代理工具
 
-**opkg 版：**
-
-```bash
-opkg install luci-app-openclash
-```
-
-**apk 版：**
-
-```bash
-apk add luci-app-openclash
-```
-
-内核部署步骤相同：
-
-- 前往 [OpenClash Releases](https://github.com/vernesong/OpenClash/releases) 下载插件
-- 前往 [mihomo Releases](https://github.com/MetaCubeX/mihomo/releases) 下载内核
-- 解压内核后重命名为 `clash_meta`，放置到 `/etc/openclash/core`
-- 在 LuCI 中完成后续配置并启动
+- 操作步骤
+  - 下载插件本体
+    - 前往 Github ,并按照说明下载安装
+    - URL: [releases](https://github.com/vernesong/OpenClash/releases)
+  - 下载内核
+    - 前往 Github ,并按照说明下载
+    - URL: [releases](https://github.com/MetaCubeX/mihomo/releases)
+    - 解压后重命名为`clash_meta`
+    - 放置在`/etc/openclash/core`
+  - 其他配置并启动
 
 ## apk vs opkg 常用命令对照
 
-| 操作 | opkg | apk |
-|---|---|---|
-| 更新源 | `opkg update` | `apk update` |
-| 安装包 | `opkg install <pkg>` | `apk add <pkg>` |
-| 移除包 | `opkg remove <pkg>` | `apk del <pkg>` |
-| 列出已安装 | `opkg list-installed` | `apk list -I` |
-| 搜索包 | `opkg find <pkg>` | `apk search <pkg>` |
-| 查看包信息 | `opkg info <pkg>` | `apk info <pkg>` |
+| 操作         | opkg                      | apk                                    |
+| ------------ | ------------------------- | -------------------------------------- |
+| 更新源       | `opkg update`             | `apk update`                           |
+| 安装包       | `opkg install <pkg>`      | `apk add <pkg>`                        |
+| 移除包       | `opkg remove <pkg>`       | `apk del <pkg>`                        |
+| 列出已安装   | `opkg list-installed`     | `apk list -I`                          |
+| 搜索包       | `opkg find <pkg>`         | `apk search <pkg>`                     |
+| 查看包信息   | `opkg info <pkg>`         | `apk info <pkg>`                       |
 | 安装本地 ipk | `opkg install <file>.ipk` | `apk add --allow-untrusted <file>.ipk` |
-| 强制覆盖 | `--force-overwrite` | 默认行为，冲突时会提示 |
+| 强制覆盖     | `--force-overwrite`       | 默认行为，冲突时会提示                 |
 
 ## 参考
 
 - [飞牛论坛原帖 - 虚拟机安装OpenWRT](https://club.fnnas.com/forum.php?mod=viewthread&tid=42069)
-- [OpenWRT apk 迁移说明](https://openwrt.org/docs/guide-user/additional-software/opkg-to-apk)
 - [OpenWRT 官方镜像下载](https://downloads.openwrt.org/releases/)
 - [南京大学 OpenWRT 镜像源](https://help.mirror.nju.edu.cn/openwrt/)
