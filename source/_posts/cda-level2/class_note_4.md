@@ -484,7 +484,7 @@ P = \frac{1}{1+e^{-(\beta_0+\beta_1x)}}
 {% mathjax %}
 y^* = x^，\beta + \xi
 {% endmathjax %}
-<br/>
+
 {% mathjax %}
 y=\left\{\begin{matrix} 
   1, if:y^* \gt  0; \\  
@@ -494,7 +494,7 @@ y=\left\{\begin{matrix}
 
 <!-- prettier-ignore-end -->
 
-一般无法求导时，使用 Newton-Raphsopn 进行数值计算。
+一般无法求导时，使用 Newton-Raphson 进行数值计算。
 
 正则化的逻辑回归：
 
