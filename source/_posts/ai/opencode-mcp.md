@@ -26,16 +26,15 @@ MCP 解决的核心问题是：**一次编写，到处使用**。任何实现了
 
 {% alertpanel info "MCP 架构" %}
 
-```
-┌──────────────────────────────────────────────┐
-│                  MCP Client                    │
-│  (Claude Desktop / OpenCode / Cursor / ...)    │
-│                                                │
-│    ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│    │  Server A │  │  Server B │  │  Server C │  │
-│    │ (GitHub)  │  │ (Files)  │  │ (高德地图) │   │
-│    └──────────┘  └──────────┘  └──────────┘   │
-└──────────────────────────────────────────────┘
+```mermaid
+graph TB
+    Client["MCP Client<br/>Claude Desktop / OpenCode / Cursor / ..."]
+    S1["Server A<br/>GitHub"]
+    S2["Server B<br/>Files"]
+    S3["Server C<br/>高德地图"]
+    Client --- S1
+    Client --- S2
+    Client --- S3
 ```
 
 MCP Server 通过以下三种原语暴露能力：

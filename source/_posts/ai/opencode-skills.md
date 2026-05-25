@@ -205,28 +205,11 @@ uipro init --ai opencode
 
 当你描述 UI 需求时，Skill 会自动进行多维度搜索：
 
-```
-用户请求: "为我的美容水疗中心设计一个落地页"
-          │
-          ▼
-┌─────────────────────────────────────┐
-│  并行搜索（5 个维度）                  │
-│  • 产品类型匹配（161 类别）            │
-│  • 风格推荐（67 风格）                 │
-│  • 色彩方案（161 调色板）              │
-│  • 落地页模式（24 模式）               │
-│  • 字体组合（57 搭配）                 │
-└─────────────────────────────────────┘
-          │
-          ▼
-┌─────────────────────────────────────┐
-│  推理引擎输出完整设计系统               │
-│  • 推荐布局模式                        │
-│  • 推荐 UI 风格                        │
-│  • 配色方案 + 字体搭配                  │
-│  • 动效建议 + 需避免的反模式            │
-│  • 交付前检查清单                      │
-└─────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["用户请求"] --> B["并行搜索<br/>产品类型 · 风格 · 颜色 · 布局 · 字体"]
+    B --> C["推理引擎<br/>输出完整设计系统"]
+    C --> D["代码生成 + 预交付检查"]
 ```
 
 ### 支持的 67 种 UI 风格（部分）
@@ -291,25 +274,15 @@ design-system/
 
 Superpowers 将软件开发分解为 7 个标准阶段：
 
-```
- 1. brainstorming      脑暴阶段：通过苏格拉底式提问细化需求
-         │
- 2. using-git-worktrees  为功能创建隔离的 Git worktree 工作区
-         │
- 3. writing-plans       将工作拆分为 2-5 分钟可完成的小任务
-         │              每项任务包含精确文件路径 + 完整代码 + 验证步骤
-         │
- 4. subagent-driven      启动子 Agent 逐个执行任务
-    -development         进行两阶段审查（需求合规 + 代码质量）
-         │
- 5. test-driven          严格执行 RED-GREEN-REFACTOR 循环
-    -development         删除测试前写的代码
-         │
- 6. requesting-          按严重级别报告问题，关键问题阻塞进度
-    code-review
-         │
- 7. finishing-a-         验证测试 → 合并/PR/保留/丢弃
-    development-branch
+```mermaid
+flowchart TD
+    S1["1. brainstorming<br/>苏格拉底式提问细化需求"] --> S2
+    S2["2. using-git-worktrees<br/>创建隔离的 Git worktree"] --> S3
+    S3["3. writing-plans<br/>拆分为 2-5 分钟的小任务"] --> S4
+    S4["4. subagent-driven-development<br/>子 Agent 逐个执行，两阶段审查"] --> S5
+    S5["5. test-driven-development<br/>严格执行 RED-GREEN-REFACTOR"] --> S6
+    S6["6. requesting-code-review<br/>按严重级别报告问题"] --> S7
+    S7["7. finishing-a-development-branch<br/>验证测试 → 合并 / PR / 清理"]
 ```
 
 ### Skills 库
