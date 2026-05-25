@@ -1,6 +1,6 @@
 ---
 title: OpenCode Skills 详解
-date: 2026-05-24 01:00:00
+date: 2026-05-25 21:00:00
 categories: AI
 tags:
   - tools
@@ -39,13 +39,13 @@ skills/
 
 OpenCode 会从以下路径自动发现 Skills（按优先级）：
 
-| 路径 | 作用域 |
-| --- | --- |
-| `.opencode/skills/<name>/SKILL.md` | 项目级（推荐） |
-| `~/.config/opencode/skills/<name>/SKILL.md` | 全局 |
-| `.claude/skills/<name>/SKILL.md` | 项目级（Claude 兼容） |
-| `~/.claude/skills/<name>/SKILL.md` | 全局（Claude 兼容） |
-| `.agents/skills/<name>/SKILL.md` | 项目级（通用兼容） |
+| 路径                                        | 作用域                |
+| ------------------------------------------- | --------------------- |
+| `.opencode/skills/<name>/SKILL.md`          | 项目级（推荐）        |
+| `~/.config/opencode/skills/<name>/SKILL.md` | 全局                  |
+| `.claude/skills/<name>/SKILL.md`            | 项目级（Claude 兼容） |
+| `~/.claude/skills/<name>/SKILL.md`          | 全局（Claude 兼容）   |
+| `.agents/skills/<name>/SKILL.md`            | 项目级（通用兼容）    |
 
 > OpenCode 会从当前工作目录向上遍历到 Git 仓库根目录，沿路加载所有匹配的 Skills。
 
@@ -63,11 +63,13 @@ metadata:
 ---
 
 ## 功能
+
 - 从已合并的 PR 草拟发布说明
 - 建议版本号升级
 - 生成可直接使用的 `gh release create` 命令
 
 ## 使用时机
+
 当你准备创建带标签的发布版本时使用此技能。
 ```
 
@@ -102,11 +104,11 @@ metadata:
 }
 ```
 
-| 权限 | 行为 |
-| --- | --- |
-| `allow` | 自动加载 |
-| `deny` | 对 Agent 完全隐藏 |
-| `ask` | 使用前弹出确认提示 |
+| 权限    | 行为               |
+| ------- | ------------------ |
+| `allow` | 自动加载           |
+| `deny`  | 对 Agent 完全隐藏  |
+| `ask`   | 使用前弹出确认提示 |
 
 支持通配符匹配：如 `internal-*` 匹配 `internal-docs`、`internal-tools` 等。
 
@@ -132,38 +134,38 @@ metadata:
 
 ### 创意与设计类
 
-| Skill | 功能 |
-| --- | --- |
+| Skill               | 功能                                                                                    |
+| ------------------- | --------------------------------------------------------------------------------------- |
 | **frontend-design** | 创建独特的、产品级前端界面，注重排版、配色、动效与空间构图，刻意避免千篇一律的"AI 风格" |
-| **canvas-design** | 在 HTML Canvas 上创建视觉设计（海报、艺术作品等），输出为 PNG/SVG |
-| **algorithmic-art** | 使用 p5.js 创建算法生成艺术（流场、粒子系统等） |
-| **theme-factory** | 为幻灯片、文档、网页等生成主题配色与字体搭配 |
+| **canvas-design**   | 在 HTML Canvas 上创建视觉设计（海报、艺术作品等），输出为 PNG/SVG                       |
+| **algorithmic-art** | 使用 p5.js 创建算法生成艺术（流场、粒子系统等）                                         |
+| **theme-factory**   | 为幻灯片、文档、网页等生成主题配色与字体搭配                                            |
 
 ### 开发与技术类
 
-| Skill | 功能 |
-| --- | --- |
-| **webapp-testing** | 使用 Playwright 对 Web 应用进行自动化测试，支持截图、DOM 检查、浏览器日志捕获 |
-| **mcp-builder** | 指导创建高质量的 MCP Server，用于集成外部工具与 API |
-| **web-artifacts-builder** | 构建复杂的多组件 HTML Artifacts，支持 React、Tailwind CSS、shadcn/ui |
-| **claude-api** | 指导使用 Claude API 的最佳实践 |
+| Skill                     | 功能                                                                          |
+| ------------------------- | ----------------------------------------------------------------------------- |
+| **webapp-testing**        | 使用 Playwright 对 Web 应用进行自动化测试，支持截图、DOM 检查、浏览器日志捕获 |
+| **mcp-builder**           | 指导创建高质量的 MCP Server，用于集成外部工具与 API                           |
+| **web-artifacts-builder** | 构建复杂的多组件 HTML Artifacts，支持 React、Tailwind CSS、shadcn/ui          |
+| **claude-api**            | 指导使用 Claude API 的最佳实践                                                |
 
 ### 企业与沟通类
 
-| Skill | 功能 |
-| --- | --- |
-| **brand-guidelines** | 应用公司品牌色彩、字体、Logo 规范 |
-| **internal-comms** | 编写内部沟通文档（状态报告、公告、FAQ 等） |
-| **doc-coauthoring** | 协作撰写文档（提案、技术规范、决策记录） |
+| Skill                | 功能                                       |
+| -------------------- | ------------------------------------------ |
+| **brand-guidelines** | 应用公司品牌色彩、字体、Logo 规范          |
+| **internal-comms**   | 编写内部沟通文档（状态报告、公告、FAQ 等） |
+| **doc-coauthoring**  | 协作撰写文档（提案、技术规范、决策记录）   |
 
 ### 文档处理类
 
-| Skill | 功能 |
-| --- | --- |
+| Skill    | 功能                                               |
+| -------- | -------------------------------------------------- |
 | **docx** | 创建和编辑 Word 文档，支持修订跟踪、评论、格式保留 |
-| **pdf** | 提取 PDF 表单字段、填写 PDF、合并拆分等 |
-| **pptx** | 创建和编辑 PowerPoint 演示文稿 |
-| **xlsx** | 创建和编辑 Excel 电子表格，支持公式和图表 |
+| **pdf**  | 提取 PDF 表单字段、填写 PDF、合并拆分等            |
+| **pptx** | 创建和编辑 PowerPoint 演示文稿                     |
+| **xlsx** | 创建和编辑 Excel 电子表格，支持公式和图表          |
 
 ### 在 OpenCode 中使用 anthropics/skills
 
@@ -229,18 +231,18 @@ uipro init --ai opencode
 
 ### 支持的 67 种 UI 风格（部分）
 
-| 风格 | 适用场景 |
-| --- | --- |
-| Minimalism & Swiss Style | 企业应用、仪表盘 |
-| Glassmorphism | 现代 SaaS、金融仪表盘 |
-| Neumorphism | 健康应用、冥想平台 |
-| Brutalism | 设计作品集、艺术项目 |
-| Bento Box Grid | 产品页、个人主页 |
-| Neubrutalism | Gen Z 品牌、创业公司 |
-| AI-Native UI | AI 产品、聊天机器人 |
-| Dark Mode (OLED) | 夜间模式应用 |
-| Claymorphism | 教育应用、儿童应用 |
-| Spatial UI (VisionOS) | 空间计算、VR/AR |
+| 风格                     | 适用场景              |
+| ------------------------ | --------------------- |
+| Minimalism & Swiss Style | 企业应用、仪表盘      |
+| Glassmorphism            | 现代 SaaS、金融仪表盘 |
+| Neumorphism              | 健康应用、冥想平台    |
+| Brutalism                | 设计作品集、艺术项目  |
+| Bento Box Grid           | 产品页、个人主页      |
+| Neubrutalism             | Gen Z 品牌、创业公司  |
+| AI-Native UI             | AI 产品、聊天机器人   |
+| Dark Mode (OLED)         | 夜间模式应用          |
+| Claymorphism             | 教育应用、儿童应用    |
+| Spatial UI (VisionOS)    | 空间计算、VR/AR       |
 
 ### 使用示例
 
@@ -314,30 +316,30 @@ Superpowers 将软件开发分解为 7 个标准阶段：
 
 **测试与调试：**
 
-| Skill | 功能 |
-| --- | --- |
-| test-driven-development | RED-GREEN-REFACTOR 完整循环，含反模式参考 |
-| systematic-debugging | 4 阶段根因分析流程 |
-| verification-before-completion | 确保问题真正修复 |
+| Skill                          | 功能                                      |
+| ------------------------------ | ----------------------------------------- |
+| test-driven-development        | RED-GREEN-REFACTOR 完整循环，含反模式参考 |
+| systematic-debugging           | 4 阶段根因分析流程                        |
+| verification-before-completion | 确保问题真正修复                          |
 
 **协作与规划：**
 
-| Skill | 功能 |
-| --- | --- |
-| brainstorming | 苏格拉底式设计优化 |
-| writing-plans | 详细实施计划（精确到文件路径和代码） |
-| executing-plans | 批量执行 + 人工检查点 |
-| subagent-driven-development | 子 Agent 派发 + 两阶段审查 |
-| dispatching-parallel-agents | 并发子 Agent 工作流 |
-| requesting-code-review | 提交前自查清单 |
-| receiving-code-review | 响应审查反馈 |
+| Skill                       | 功能                                 |
+| --------------------------- | ------------------------------------ |
+| brainstorming               | 苏格拉底式设计优化                   |
+| writing-plans               | 详细实施计划（精确到文件路径和代码） |
+| executing-plans             | 批量执行 + 人工检查点                |
+| subagent-driven-development | 子 Agent 派发 + 两阶段审查           |
+| dispatching-parallel-agents | 并发子 Agent 工作流                  |
+| requesting-code-review      | 提交前自查清单                       |
+| receiving-code-review       | 响应审查反馈                         |
 
 **元技能：**
 
-| Skill | 功能 |
-| --- | --- |
-| writing-skills | 创建新 Skills 的最佳实践指南 |
-| using-superpowers | Superpowers 系统介绍 |
+| Skill             | 功能                         |
+| ----------------- | ---------------------------- |
+| writing-skills    | 创建新 Skills 的最佳实践指南 |
+| using-superpowers | Superpowers 系统介绍         |
 
 ### 在 OpenCode 中安装
 
@@ -349,15 +351,15 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 
 ## 三套 Skills 对比
 
-| 维度 | anthropics/skills | UI UX Pro Max | Superpowers |
-| --- | --- | --- | --- |
-| 定位 | 通用 Skills 示范集 | 专注 UI/UX 设计 | 完整开发方法论 |
-| 规模 | 18 个 Skills | 1 个大型 Skill | 15+ 个 Skills |
-| 应用场景 | 文档、前端、测试、设计 | 界面设计与实现 | 软件开发全流程 |
-| 适用 Agent | Claude Code、OpenCode 等 | 支持 17+ 种 AI 助手 | 支持 8+ 种 Agent |
-| GitHub Star | 140K+ | 82K+ | 204K+ |
-| 许可 | Apache 2.0 / 源码可见 | MIT | MIT |
-| 激活方式 | 自动匹配 | 自动匹配 / 命令触发 | 自动匹配 |
+| 维度        | anthropics/skills        | UI UX Pro Max       | Superpowers      |
+| ----------- | ------------------------ | ------------------- | ---------------- |
+| 定位        | 通用 Skills 示范集       | 专注 UI/UX 设计     | 完整开发方法论   |
+| 规模        | 18 个 Skills             | 1 个大型 Skill      | 15+ 个 Skills    |
+| 应用场景    | 文档、前端、测试、设计   | 界面设计与实现      | 软件开发全流程   |
+| 适用 Agent  | Claude Code、OpenCode 等 | 支持 17+ 种 AI 助手 | 支持 8+ 种 Agent |
+| GitHub Star | 140K+                    | 82K+                | 204K+            |
+| 许可        | Apache 2.0 / 源码可见    | MIT                 | MIT              |
+| 激活方式    | 自动匹配                 | 自动匹配 / 命令触发 | 自动匹配         |
 
 ## 自己编写 Skill
 
@@ -375,14 +377,17 @@ description: 当用户需要 XXX 时使用此技能，提供 YYY 功能
 ---
 
 ## 功能说明
+
 - 做什么
 - 不做什么
 
 ## 工作流程
+
 1. 第一步
 2. 第二步
 
 ## 注意事项
+
 - 要点 1
 - 要点 2
 ```
