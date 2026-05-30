@@ -26,11 +26,11 @@ git config --global user.email "your.email@example.com"
 {% alertpanel info "配置级别" %}
 Git 配置有三个级别：
 
-| 级别 | 作用范围 | 配置文件 |
-|------|---------|---------|
-| `--local` | 当前仓库（默认） | `.git/config` |
-| `--global` | 当前用户所有仓库 | `~/.gitconfig` |
-| `--system` | 系统所有用户 | `/etc/gitconfig` |
+| 级别       | 作用范围         | 配置文件         |
+| ---------- | ---------------- | ---------------- |
+| `--local`  | 当前仓库（默认） | `.git/config`    |
+| `--global` | 当前用户所有仓库 | `~/.gitconfig`   |
+| `--system` | 系统所有用户     | `/etc/gitconfig` |
 
 优先级：local > global > system
 {% endalertpanel %}
@@ -97,6 +97,7 @@ style: 代码格式调整
 refactor: 重构
 chore: 构建/工具变更
 ```
+
 {% endalertpanel %}
 
 ## 分支管理
@@ -137,7 +138,7 @@ git push origin --delete <branch-name>
 - **merge**：保留完整的分支历史，会产生合并提交
 - **rebase**：使提交历史更线性整洁，但会改写提交历史
 
-{% mermaid %}
+```mermaid
 gitGraph
    commit id: "A"
    commit id: "B"
@@ -148,7 +149,7 @@ gitGraph
    commit id: "D"
    checkout feature
    commit id: "E"
-{% endmermaid %}
+```
 
 {% endalertpanel %}
 
