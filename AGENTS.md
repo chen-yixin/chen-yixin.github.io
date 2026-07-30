@@ -25,7 +25,12 @@
 ├── _config.kratos-rebirth.yml   # 主题配置（导航、侧栏、评论、CDN、分享、打赏等）
 ├── scaffolds/                   # 文章/页面模板（post.md, draft.md, page.md）
 ├── scripts/                     # 自定义 Hexo 脚本（SEO helper）
-├── skills/                      # Claude Code 自定义技能
+├── skills/                      # ClawHub 技能商店安装的技能
+├── .claude/                     # Claude Code 项目配置
+│   ├── skills/                  # 项目自定义技能（hexo-post-writer）
+│   │   └── hexo-post-writer/
+│   └── agents/                  # 自定义 sub-agent 定义
+│       └── blog-writer.md
 ├── source/
 │   ├── _posts/                  # 博客文章（Markdown，按分类分子目录）
 │   ├── _data/                   # Hexo 数据文件（linklist.yml）
@@ -51,7 +56,10 @@
 - **CDN**：所有图片和静态资源托管在七牛云（`img.hoboro.top`），上传脚本为 `upload_qiniu.cjs`。
 - **评论系统**：Waline 自托管，支持评论、浏览量统计和表情包（Bilibili / Bmoji）。
 - **自定义脚本**：`scripts/seo-helper.js` 在 `after_render:html` 阶段注入 SEO 优化标签（站点验证 meta、Twitter Card 升级、sitemap link 等）。
-- **自定义技能**：`skills/hexo-blog-with-seo/` 提供了 Claude Code 博客文章写作技能，支持草稿创建和带 SEO 优化的发布流程。
+- **自定义技能**：
+  - `skills/hexo-blog-with-seo/` — ClawHub 安装的 Hexo 博客写作技能（草稿 + SEO + 部署）
+  - `.claude/skills/hexo-post-writer/` — 项目定制的博客文章写作技能，包含 Kratos-Rebirth 主题标签插件、Frontmatter 字段、写作规范等完整参考
+  - `.claude/agents/blog-writer.md` — 博客写作专用 sub-agent，可被 Agent 工具调用
 
 ## CI/CD
 
