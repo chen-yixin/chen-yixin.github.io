@@ -1,5 +1,6 @@
 ---
 title: mermaid图表渲染
+description: "记录 Mermaid 图表在 Hexo 中的使用方法：从安装 hexo-filter-mermaid-diagrams 到以 mermaid 代码块渲染，覆盖流程图、时序图、甘特图、类图、Git 图、象限图、XY 图与 ER 图的示例。"
 date: 2021-03-27 21:47:00
 categories: 教程文档
 tags:

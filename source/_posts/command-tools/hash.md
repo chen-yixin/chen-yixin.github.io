@@ -1,5 +1,6 @@
 ---
 title: 文件Hash计算
+description: "不装第三方工具，用系统自带命令计算文件 Hash 并校验下载完整性：Windows 的 certutil、Linux 的 sha256sum/md5sum、macOS 的 shasum 用法对照。"
 date: 2025-01-03 16:02:01
 categories: 命令行工具
 tags:

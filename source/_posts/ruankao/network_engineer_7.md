@@ -1,5 +1,6 @@
 ---
 title: 网络工程师-局域网基础
+description: "软考中级网络工程师第七章笔记：局域网拓扑与传输介质、IEEE 802 参考模型与子标准、以太网 CSMA/CD 冲突检测与退避算法、MAC 地址与帧格式、以太网通道、无线局域网与综合布线。"
 categories: 软考
 top: false
 comments: true

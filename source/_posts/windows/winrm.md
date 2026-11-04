@@ -1,5 +1,6 @@
 ---
 title: WinRM服务开启
+description: "开启 Windows 的 WinRM 远程命令行服务：查看服务状态、快速配置监听与认证方式，并用 pywinrm 验证远程连接，便于后续批量执行命令（需管理员权限）。"
 date: 2020-08-08 23:38:05
 categories: 系统服务
 tags:

@@ -1,5 +1,6 @@
 ---
 title: Git
+description: "Git 常用命令速查：配置级别与基本工作流、分支管理与 merge/rebase 取舍、历史查看与撤销操作、stash 暂存、远程仓库、标签、.gitignore 与代理设置。"
 date: 2025-01-03 20:00:00
 categories: 命令行工具
 tags:

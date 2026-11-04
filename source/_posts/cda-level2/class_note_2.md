@@ -1,5 +1,6 @@
 ---
 title: CDA Level-II 数据采集与处理
+description: "CDA Level-II 数据采集与处理笔记：原始数据与二手数据的获取方式、简单随机/分层/系统/多段等概率抽样方法、抽样误差与样本量确定，以及数据探查、可视化与预处理要点。"
 categories: CDA
 top: false
 comments: true

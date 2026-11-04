@@ -1,5 +1,6 @@
 ---
 title: 【草船借箭】1.搭建SSH蜜罐
+description: "用 Docker 搭建 SSH 蜜罐的第一篇：把真实 sshd 改到非标准端口，运行 fffaraz/fakessh 容器收集扫描者的 IP、客户端版本与尝试凭据，并整理日志以备后续分析。"
 comments: true
 toc: true
 donate: true

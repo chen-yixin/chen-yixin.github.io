@@ -1,5 +1,6 @@
 ---
 title: CDA Level-II 用户标签体系与用户画像
+description: "CDA Level-II 用户标签体系与用户画像笔记：如何识别目标消费群体的意愿与能力、用 OSM 模型和北极星指标拆解业务指标，以及标签的制作方法与企业决策层次的关系。"
 categories: CDA
 top: false
 comments: true

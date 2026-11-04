@@ -1,5 +1,6 @@
 ---
 title: OpenCode Skills 详解
+description: "OpenCode 的 Skills 使用指南：目录结构与加载优先级、SKILL.md 的命名与格式规范，并对比 anthropics/skills、UI UX Pro Max、Superpowers 三套常用技能集合，最后演示如何自己编写一个 Skill。"
 date: 2026-05-25 21:00:00
 categories: AI
 tags:

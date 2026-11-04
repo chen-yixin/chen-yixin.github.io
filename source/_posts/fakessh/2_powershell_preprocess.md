@@ -1,5 +1,6 @@
 ---
 title: 【草船借箭】2.数据预处理(PowerShell)
+description: "SSH 蜜罐日志预处理（PowerShell 篇）：用通配符批量读取日志、以正则逐行解析出时间、IP、用户名与密码，并输出为 CSV，作为后续 Python 方案的对照实现。"
 comments: true
 toc: true
 donate: true

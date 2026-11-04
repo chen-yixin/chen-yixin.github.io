@@ -1,5 +1,6 @@
 ---
 title: RDP连接保存用户名和密码
+description: "让 Windows 远程桌面自动带上用户名和密码：保存 RDP 文件、用 PowerShell 生成加密后的密码字符串，再把 password 与 username 字段写回文件，免去每次手动输入。"
 date: 2021-11-07 17:33:14
 categories: 教程文档
 tags:

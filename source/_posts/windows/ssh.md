@@ -1,5 +1,6 @@
 ---
 title: 使用SSH管理Windows
+description: "在 Windows 上启用 OpenSSH Server 并用密钥免密登录：图形界面与 PowerShell 两种安装方式、服务与防火墙配置、authorized_keys 与 sshd_config 的修改，以及把 PowerShell 设为默认 Shell。"
 date: 2021-01-09 20:44:23
 categories: 系统服务
 tags:

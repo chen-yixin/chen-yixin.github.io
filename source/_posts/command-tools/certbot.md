@@ -1,5 +1,6 @@
 ---
 title: 使用 Let’s Encrypt 签发证书
+description: "使用 Let's Encrypt 免费签发泛域名 SSL 证书的完整记录：Debian 12 上用 pip 安装 Certbot、DNS-01 手动验证流程，以及借助阿里云 RAM 权限实现自动签发与续期。"
 date: 2025-02-23
 categories: 命令行工具
 tags:

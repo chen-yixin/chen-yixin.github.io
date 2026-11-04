@@ -1,5 +1,6 @@
 ---
 title: 如何写出好的 Skill
+description: "写给 AI 的指令该怎么写：从 Anthropic skill-creator 的设计思路出发，讲清 Skill 的本质与触发机制、三大设计维度、六步创建流程和上线前检查清单，帮你写出真正可复用的 AI Agent 技能包。"
 date: 2026-06-12 14:00:00
 categories: AI
 tags:

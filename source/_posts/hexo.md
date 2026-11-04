@@ -1,5 +1,6 @@
 ---
 title: Hello World!
+description: "Hexo 博客从安装到部署的完整手册：基本命令与草稿工作流、文章 Front-matter、分类标签、摘要与静态资源、Scaffolds 模板、配置文件与主题管理，适合作为日常参考。"
 date: 2020-10-24 00:00:00
 updated: 2026-05-24 00:00:00
 categories: Hexo

@@ -1,5 +1,6 @@
 ---
 title: 飞牛NAS部署OpenWRT虚拟机完整指南（apk版）
+description: "飞牛 NAS（fnOS）用虚拟机部署 OpenWRT 旁路由的完整指南：镜像选择与虚拟机参数、静态 IP 与关闭 DHCP/IPv6、替换 dnsmasq-full，并适配 OpenWRT 新的 apk 包管理命令。"
 categories: NAS
 top: false
 comments: true

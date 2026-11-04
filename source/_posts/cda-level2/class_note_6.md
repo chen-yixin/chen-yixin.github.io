@@ -1,5 +1,6 @@
 ---
 title: CDA Level-II 数字化工作方法与应用
+description: "CDA Level-II 数字化工作方法笔记：症状、近端原因与根原因的区别，RCA 根本原因分析四阶段，业务流程图与泳道图的使用，以及问题诊断和策略优化的常用工具。"
 categories: CDA
 top: false
 comments: true

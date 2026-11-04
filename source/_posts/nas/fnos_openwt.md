@@ -1,5 +1,6 @@
 ---
 title: 飞牛NAS虚拟机部署OpenWRT作为旁路由
+description: "飞牛 NAS（fnOS）虚拟机部署 OpenWRT 旁路由的 opkg 版记录：配置目标与虚拟机创建、静态 IP 设置、关闭 DHCP 与 IPv6 协议栈、用 dnsmasq-full 覆盖内置 dnsmasq，并安装代理工具。"
 categories: NAS
 top: false
 comments: true

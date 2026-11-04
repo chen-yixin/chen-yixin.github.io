@@ -1,5 +1,6 @@
 ---
 title: 【草船借箭】4.密码统计分析(Pandas)
+description: "基于一年多的 SSH 蜜罐日志做密码统计分析：用 Pandas 统计最常用的用户名、密码、用户名密码组合、SSH 客户端与来源 IP TOP10，看看攻击者最爱试什么。"
 comments: true
 toc: true
 donate: true

@@ -1,5 +1,6 @@
 ---
 title: GitHub Copilot 入门指南
+description: "基于 VS Code 的 GitHub Copilot 入门教程：安装登录与订阅计划、Ask/Edit/Agent 三种模式的用法、常用快捷键与斜杠命令，以及接入 DeepSeek V4、Superpowers 和 UI UX Pro Max 插件的配置步骤。"
 date: 2026-05-30 00:00:00
 categories: AI
 tags:

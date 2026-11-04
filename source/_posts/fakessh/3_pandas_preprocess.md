@@ -1,5 +1,6 @@
 ---
 title: 【草船借箭】3.数据预处理(Pandas)
+description: "SSH 蜜罐日志预处理（Pandas 篇）：同样的正则解析逻辑改用 Pandas 实现，批量读取多个日志文件并输出 CSV，相比 PowerShell 版本速度提升明显。"
 comments: true
 toc: true
 donate: true

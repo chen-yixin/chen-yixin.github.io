@@ -1,5 +1,6 @@
 ---
 title: 网络工程师-操作系统
+description: "软考中级网络工程师第二章笔记：操作系统概述、进程状态与死锁、银行家算法与 PV 操作、页式存储与页面置换算法、文件管理和设备管理要点。"
 categories: 软考
 top: false
 comments: true

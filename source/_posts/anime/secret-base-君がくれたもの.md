@@ -1,5 +1,6 @@
 ---
 title: secret base~君がくれたもの~
+description: "《未闻花名》片尾曲 secret base～君がくれたもの～ 的听歌学日语笔记：附在线收听与带假名标注的歌词原文，逐句整理くれる、忘れない、信じて等语法点与常用词汇。"
 date: 2020-04-19 22:55:29
 categories: 日语歌
 tags:

@@ -1,5 +1,6 @@
 ---
 title: CDA Level-II 数据分析模型与应用
+description: "CDA Level-II 数据分析模型与应用笔记：波士顿矩阵与主成分分析的降维思路、主成分个数的选取原则，以及多元线性回归、逻辑回归和连续变量聚类模型的原理与适用场景。"
 categories: CDA
 top: false
 comments: true

@@ -1,5 +1,6 @@
 ---
 title: CDA Level-II 课程导读
+description: "CDA Level-II 课程导读笔记：从感知型企业的数据应用演进与 EDIT 数字化模型讲起，梳理数据分析的分类、常用方法与标准流程，作为后续章节的学习地图。"
 categories: CDA
 top: false
 comments: true

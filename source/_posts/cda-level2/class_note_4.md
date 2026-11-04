@@ -1,5 +1,6 @@
 ---
 title: CDA Level-II 统计分析
+description: "CDA Level-II 统计分析笔记：关联性与因果关系的判断框架、总体与样本、中心极限定理、参数估计与假设检验，以及两变量关联性检验和单变量影响度分析的常用方法。"
 categories: CDA
 top: false
 comments: true

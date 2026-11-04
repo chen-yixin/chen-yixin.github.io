@@ -1,5 +1,6 @@
 ---
 title: MCP 入门与实战
+description: "介绍 MCP（模型上下文协议）的核心概念：Tools/Resources/Prompts 三类原语、stdio/SSE/Streamable HTTP 三种传输方式，以及在 OpenCode 中配置 MCP Server 的完整流程，并以高德地图 MCP 为例做实战演示。"
 date: 2026-05-25 22:00:00
 categories: AI
 tags:

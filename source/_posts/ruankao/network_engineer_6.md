@@ -1,5 +1,6 @@
 ---
 title: 网络工程师-网络体系结构
+description: "软考中级网络工程师第六章笔记：计算机网络的定义与性能指标（速率、带宽、时延、RTT、利用率）、协议三要素、OSI 七层模型与数据封装、服务访问点，以及 TCP/IP 体系结构与常用端口。"
 categories: 软考
 top: false
 comments: true

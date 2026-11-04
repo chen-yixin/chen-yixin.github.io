@@ -1,5 +1,6 @@
 ---
 title: iptables
+description: "在树莓派 Debian 10 上用 iptables 做访问控制的实践：补充安装持久化工具、生成与应用规则配置文件，以及常用规则链与匹配条件的写法。"
 date: 2025-01-05 23:23:00
 categories: 命令行工具
 tags:

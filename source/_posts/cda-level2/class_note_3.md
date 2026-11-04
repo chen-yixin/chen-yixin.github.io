@@ -1,5 +1,6 @@
 ---
 title: CDA Level-II 数据模型管理
+description: "CDA Level-II 数据模型管理笔记：数据、信息、知识的区别，主数据/交易数据/参考数据/元数据的分类，数据建模的基本概念，以及数据仓库体系与 ETL 的组织方式。"
 categories: CDA
 top: false
 comments: true

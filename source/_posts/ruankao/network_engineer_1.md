@@ -1,5 +1,6 @@
 ---
 title: 网络工程师-计算机硬件基础
+description: "软考中级网络工程师第一章笔记：进制转换与原码反码补码、冯·诺依曼结构与寻址方式、CISC/RISC 指令集、流水线性能计算，以及存储系统与可靠性指标。"
 categories: 软考
 top: false
 comments: true

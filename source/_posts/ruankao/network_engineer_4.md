@@ -1,5 +1,6 @@
 ---
 title: 网络工程师-知识产权
+description: "软考中级网络工程师第四章笔记：著作权、专利权、商标权等知识产权的保护期限，职务作品与委托开发的产权人确定规则，以及侵权判定的常见考点。"
 categories: 软考
 top: false
 comments: true

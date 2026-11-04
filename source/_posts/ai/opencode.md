@@ -1,5 +1,6 @@
 ---
 title: OpenCode 使用指南
+description: "开源 AI 编程代理 OpenCode 的上手记录：Windows 11 下 WSL/Chocolatey/Scoop/NPM 四种安装方式、接入 DeepSeek V4 Pro 的配置方法、Plan/Build 模式与常用技巧，以及与主流模型的对比。"
 date: 2026-05-25 20:00:00
 categories: AI
 tags:

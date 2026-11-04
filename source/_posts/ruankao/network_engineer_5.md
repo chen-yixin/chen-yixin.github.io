@@ -1,5 +1,6 @@
 ---
 title: 网络工程师-数据通信基础
+description: "软考中级网络工程师第五章笔记：码元、带宽与信道容量（奈奎斯特与香农定理）、ASK/FSK/PSK/QAM 调制、PCM 编码与数字编码方案、复用技术、通信方式与差错控制。"
 categories: 软考
 top: false
 comments: true
