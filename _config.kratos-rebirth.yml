@@ -196,3 +196,7 @@ additional_injections:
     <script defer type="module" src="/extentions/waline.js"></script>
     <script src='https://unpkg.com/mermaid/dist/mermaid.min.js'></script>
     <script src="/extentions/mermaid.js"></script>
+
+################## 依赖文件 ##################
+vendors:
+  npm_cdn: "https://cdn.jsdelivr.net/npm/"
