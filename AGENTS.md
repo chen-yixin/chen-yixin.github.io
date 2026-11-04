@@ -73,7 +73,7 @@
 - **deploy-github-page**（仅 main）：`actions/deploy-pages@v4` 部署到 GitHub Pages。
 - **deploy-qiniu**（仅 main）：下载 artifact → `npm install qiniu glob` → 执行 `upload_qiniu.cjs` 上传增量文件并刷新 CDN。
 
-> 上传脚本按文件大小判断增量，刷新 CDN 时**跳过** `js/`、`css/`、`vendors/`；线上静态资源 `Cache-Control` 为 1 年，改动这些目录需更换版本号或手动刷新。
+> 上传脚本按文件大小与七牛 ETag 判断增量（>4MB 自动分片上传，失败自动重试），刷新 CDN 时**跳过** `js/`、`css/`、`vendors/`；线上静态资源 `Cache-Control` 为 1 年，改动这些目录需更换版本号或手动刷新。
 
 Dependabot 每天检查 npm 依赖更新（`open-pull-requests-limit: 20`）。
 
