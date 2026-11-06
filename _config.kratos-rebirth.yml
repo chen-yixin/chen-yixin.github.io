@@ -154,15 +154,17 @@ copyright_notice:
       - post
       - page
 
-# 评论系统（未启用）
+# 评论系统（giscus）
 comments:
   core:
-    enable_at: []
+    enable_at:
+      - post
+      - page
     template:
       _shared: ""
       index: ""
-      post: ""
-      page: ""
+      post: <div id="giscus-container" class="giscus kr-comments lazy-load"></div>
+      page: <div id="giscus-container" class="giscus kr-comments lazy-load"></div>
   count:
     enable_at: []
     template:
@@ -185,6 +187,7 @@ additional_injections:
   after_footer: |
     <script src='https://unpkg.com/mermaid/dist/mermaid.min.js'></script>
     <script src="/extentions/mermaid.js"></script>
+    <script src="/extentions/giscus.js"></script>
 
 ################## 依赖文件 ##################
 vendors:
