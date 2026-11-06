@@ -163,12 +163,13 @@ comments:
     template:
       _shared: ""
       index: ""
-      post: <div id="giscus-container" class="giscus kr-comments lazy-load"></div>
+      post: <div id="giscus-container" class="giscus kr-comments"></div>
       page: <div id="giscus-container" class="giscus kr-comments lazy-load"></div>
   count:
-    enable_at: []
+    enable_at:
+      - post
     template:
-      _shared: ""
+      _shared: '<span class="giscus-comment-count">0</span>'
       index: ""
       post: ""
 

@@ -9,7 +9,7 @@
     mapping: "pathname",
     strict: "0",
     reactionsEnabled: "1",
-    emitMetadata: "0",
+    emitMetadata: "1",
     inputPosition: "bottom",
     lang: "zh-CN",
   };
@@ -32,6 +32,20 @@
       );
     }
   };
+
+  // giscus 在 emitMetadata=1 时会推送 discussion 元数据，用它更新文章页的评论数。
+  const updateCommentCount = (count) => {
+    document.querySelectorAll(".giscus-comment-count").forEach((el) => {
+      el.textContent = String(count);
+    });
+  };
+
+  window.addEventListener("message", (event) => {
+    if (event.origin !== "https://giscus.app") return;
+    const discussion = event.data?.giscus?.discussion;
+    if (!discussion || typeof discussion.totalCommentCount !== "number") return;
+    updateCommentCount(discussion.totalCommentCount);
+  });
 
   const loadComments = () => {
     const container = document.getElementById("giscus-container");
