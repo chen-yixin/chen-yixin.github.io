@@ -13,7 +13,6 @@
 | **Hexo** v8 | 静态站点生成器 |
 | **Kratos:Rebirth** v3 | 博客主题 |
 | **pnpm** v9 | 包管理器 |
-| **Waline** v3 | 评论系统（自托管于 `waline.hoboro.top`） |
 | **Mermaid** | 文章内图表渲染 |
 | **highlight.js** | 代码语法高亮 |
 | **七牛云** | 静态资源 CDN（`img.hoboro.top`） |
@@ -23,7 +22,6 @@
 ## 功能一览
 
 - 🎨 暗色/亮色主题切换，PJAX 无刷新页面加载
-- 💬 Waline 评论 + 浏览量统计 + 表情包（Bilibili / Bmoji）
 - 📤 QQ / 微博 / X / Facebook 一键分享
 - 💰 支付宝 / 微信打赏
 - 📊 文章内 Mermaid 图表
@@ -115,8 +113,6 @@ share: true             # 是否显示分享
 ├── source/
 │   ├── _posts/                  # 博客文章（按分类分子目录）
 │   └── extentions/              # 自定义 JS/CSS 注入
-│       ├── waline.js            # Waline 评论初始化
-│       ├── waline.css           # Waline 自定义样式
 │       └── mermaid.js           # Mermaid 图表初始化
 ├── upload_qiniu.cjs             # 七牛云上传脚本（CI 使用）
 ├── sitemap_template.xml         # 自定义 Sitemap 模板

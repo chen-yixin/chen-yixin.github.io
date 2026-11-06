@@ -35,7 +35,7 @@
 │   ├── _posts/                  # 文章（Markdown，按分类分子目录）
 │   ├── _data/                   # Hexo 数据文件（linklist.yml）
 │   ├── assets/                  # 静态资源（favicon 等）
-│   ├── extentions/              # 注入脚本（waline.js/css、mermaid.js）
+│   ├── extentions/              # 注入脚本（mermaid.js）
 │   ├── resume/                  # 简历页面
 │   └── robots.txt               # robots 配置
 ├── sitemap_template.xml         # 自定义 sitemap 模板
@@ -48,9 +48,9 @@
 
 - **双配置**：`_config.yml` 管 Hexo 核心（站点元信息、URL、渲染器、插件、feed/sitemap），`_config.kratos-rebirth.yml` 管主题表现（导航、侧栏、评论、分享、打赏、CDN、额外注入）。展示层改动优先落在后者。
 - **静态资源分流**：主题自身 JS/CSS 与第三方依赖（nprogress、viewerjs、qr-code-styling、font-awesome）通过 `vendors.npm_cdn` 指向 jsDelivr；图片（`img.hoboro.top`）、站点 HTML 与 `/extentions` 自建脚本由七牛分发。
-- **自定义注入**：`source/extentions/` 的三个文件经主题 `additional_injections` 注入每个页面；同一段配置还从 unpkg 引入 mermaid 与 Waline CSS。
+- **自定义注入**：`source/extentions/mermaid.js` 经主题 `additional_injections` 注入每个页面；同一段配置还从 unpkg 引入 Mermaid 运行时。
 - **seo-helper.js**：在 `after_render:html` 阶段统一做 SEO 后处理——站点验证 meta、非文章页移除 `article:tag`、`twitter:card` 升级、sitemap link、JSON-LD 图片修正、OG/Twitter 图统一为 1200×630、404 与搜索页 noindex、列表页补 H1。
-- **评论**：Waline 自托管于 `waline.hoboro.top`，含浏览量统计与表情包。
+- **评论**：未启用（原 Waline 评论与浏览量统计已移除），主题 `comments` / `visit_count` 保持空配置。
 
 ## 关键约定
 
@@ -79,7 +79,7 @@ Dependabot 每天检查 npm 依赖更新（`open-pull-requests-limit: 20`）。
 
 ## 主题特性
 
-暗色/亮色主题切换（PJAX）、Waline 评论与浏览量、QQ/微博/X/Facebook 分享、支付宝/微信打赏、Mermaid 图表、highlight.js 代码高亮、RSS/Atom、sitemap 与 baidusitemap、中文注音（hexo-zhruby）、数学公式（hexo-math）、站内搜索。
+暗色/亮色主题切换（PJAX）、QQ/微博/X/Facebook 分享、支付宝/微信打赏、Mermaid 图表、highlight.js 代码高亮、RSS/Atom、sitemap 与 baidusitemap、中文注音（hexo-zhruby）、数学公式（hexo-math）、站内搜索。
 
 ## 写作
 

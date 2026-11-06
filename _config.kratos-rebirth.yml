@@ -76,7 +76,6 @@ footer:
     additional: # 托管信息等
       - - 由 <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a> 强力驱动
         - 在 <a href="https://marketing.qiniu.com/cps/redirect?redirect_id=4&cps_key=1hhtlnlchjhoy" target="_blank">七牛云</a> 和 <a href="https://github.io" target="_blank">Github Pages</a> 暖心托管
-      - - 您是本站的第 <span data-path="/index.html" class="waline-pageview-count"></span> 位访客
       - - <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">苏ICP备2020060705号</a>
 
 # 代码高亮
@@ -155,45 +154,35 @@ copyright_notice:
       - post
       - page
 
-# 评论系统
+# 评论系统（未启用）
 comments:
   core:
-    enable_at:
-      - index
-      - post
-      - page
+    enable_at: []
     template:
       _shared: ""
       index: ""
-      post: <div id="w-comments" class="kr-comments" data-path="$PATH"></div>
-      page: <div id="w-comments" class="kr-comments" data-path="$PATH"></div>
+      post: ""
+      page: ""
   count:
-    enable_at:
-      - index
-      - post
+    enable_at: []
     template:
-      _shared: <span data-path="$PATH" class="waline-comment-count"> </span>
+      _shared: ""
       index: ""
       post: ""
 
-# 访问数量统计
+# 访问数量统计（未启用）
 visit_count:
-  enable_at:
-    - index
-    - post
+  enable_at: []
   template:
-    _shared: <span data-path="$PATH" class="waline-pageview-count"> </span>
+    _shared: ""
     index: ""
     post: ""
 
 ################## 额外的注入代码 ##################
 additional_injections:
-  head: |
-    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
-    <link rel="stylesheet" href="/extentions/waline.css" />
+  head: ""
   footer: ""
   after_footer: |
-    <script defer type="module" src="/extentions/waline.js"></script>
     <script src='https://unpkg.com/mermaid/dist/mermaid.min.js'></script>
     <script src="/extentions/mermaid.js"></script>
 
