@@ -5,7 +5,7 @@ date: 2020-10-24 00:00:00
 updated: 2026-05-24 00:00:00
 categories: Hexo
 tags:
-  - hexo
+  - Hexo
 sticky: 1
 #cover:
 comments: true

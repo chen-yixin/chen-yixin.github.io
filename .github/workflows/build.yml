@@ -3,7 +3,18 @@ name: Build
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "AGENTS.md"
+      - "README.md"
+      - "skills/**"
+      - ".claude/**"
+      - "scaffolds/**"
   pull_request:
+
+# 连续 push 时取消仍在运行的旧任务，避免同一批页面被重复上传与刷新。
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:

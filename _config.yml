@@ -47,6 +47,9 @@ post_asset_folder: true
 marked:
   prependRoot: true
   postAsset: true
+  # 关闭邮箱实体混淆：marked 每次渲染会随机选择十进制/十六进制实体，
+  # 导致含 mailto 链接的页面（如 resume）每次构建都变化。
+  mangle: false
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
@@ -70,7 +73,7 @@ prismjs:
 index_generator:
   path: ""
   per_page: 10
-  order_by: -date
+  order_by: -date title
 
 # Category & Tag
 default_category: 无家可归的文章君T-T
@@ -123,6 +126,16 @@ sitemap:
 
 baidusitemap:
   path: baidusitemap.xml
+
+# MathJax 输出选项
+## fontCache: none 将公式使用的字形路径内联到每个公式中，避免生成 MJX-N 这类
+## 依赖于渲染顺序的全局 id；否则同一份 Markdown 每次构建出的 SVG 编号都会变，
+## 触发无意义的增量上传与 CDN 刷新。
+math:
+  mathjax:
+    options:
+      svg:
+        fontCache: "none"
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

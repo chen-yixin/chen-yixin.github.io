@@ -60,10 +60,11 @@
 4. **固定链接**：全局格式为 `posts/:title/`，修改会破坏所有已有链接；部分文章在 frontmatter 用 `permalink` 覆盖（如 anime 分类）。改文件名不影响 URL，改 `permalink` 会断链。
 5. **Front-matter**：字段见 `scaffolds/post.md` 与 README；新文章必须写 `description`（每页 SEO 描述），`keywords` 可选。
 6. **SEO 是易碎配置**：`pretty_urls.trailing_index: false`（canonical 为 `/xxx/`）、feed 只输出摘要（`content: false`、`limit: 10`）、`/404.html` 与 `/search/` 为 noindex、列表页 H1 由脚本注入（视觉隐藏）、默认分享图为 banner 裁剪的 1200×630。改动这些前先按约定 8 做全站检查。
-7. **静态资源**：新增主题依赖或升级主题时调整 `vendors.npm_cdn`，不要把资源改回本站。
+7. **静态资源**：主题 JS/CSS 与第三方依赖只走 jsDelivr；`scripts/prune-unused-assets.js` 会在生成阶段移除主题 source 复制到 `public/` 的 `js/`、`css/`、`vendors/` 副本，上传脚本也不会再上传这些路径。新增主题依赖或升级主题时调整 `vendors.npm_cdn`，不要把资源改回本站。
 8. **自检**：`npx hexo generate --force` 后抽查 `public/`——canonical 与 og:url 不含 `index.html`、og:image 为 1200×630、文章页 `meta description` 非空、引用的外部资源可访问。
 9. **换行符**：仓库 `core.autocrlf=true`；用脚本批量改文章时要保留原行尾，否则会产生整文件 diff。
 10. **提交信息**：`<emoji> <type>(<scope>): 中文摘要`，正文用 `-` 列表说明改动（与仓库历史一致）。
+11. **构建确定性**：`scripts/stabilize-locals.js` 固定 posts/pages/tags/categories 的排序，配合 `index_generator.order_by: -date title`、MathJax `svg.fontCache: none`、`marked.mangle: false` 消除每次构建都会出现的伪变更。新增文章时避免与其他文章使用完全相同的 `date`（同日发布请错开时间）。
 
 ## CI/CD
 
@@ -73,7 +74,7 @@
 - **deploy-github-page**（仅 main）：`actions/deploy-pages@v4` 部署到 GitHub Pages。
 - **deploy-qiniu**（仅 main）：下载 artifact → `npm install qiniu glob` → 执行 `upload_qiniu.cjs` 上传增量文件并刷新 CDN。
 
-> 上传脚本按文件大小与七牛 ETag 判断增量（>4MB 自动分片上传，失败自动重试），刷新 CDN 时**跳过** `js/`、`css/`、`vendors/`；线上静态资源 `Cache-Control` 为 1 年，改动这些目录需更换版本号或手动刷新。
+> 上传脚本按文件大小与七牛 ETag 判断增量（>4MB 自动分片上传，失败自动重试），并清理对象存储中历史遗留的 `js/`、`css/`、`vendors/`、`extentions/waline.*`；刷新 CDN 时每个页面只刷新目录形式（如 `/posts/x/`），不再同时刷新 `index.html`，避免刷新额度翻倍。线上静态资源 `Cache-Control` 为 1 年，改动这些目录需更换版本号或手动刷新。
 
 Dependabot 每天检查 npm 依赖更新（`open-pull-requests-limit: 20`）。
 

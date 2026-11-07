@@ -35,8 +35,24 @@ const RETRY_BASE_DELAY_MS = 500;
 const RESUMABLE_THRESHOLD = 4 * 1024 * 1024;
 /** 分片上传的分片大小，同时也是七牛 ETag 的分块大小。 */
 const CHUNK_SIZE = 4 * 1024 * 1024;
-/** 这些目录下的资源通过文件名版本号管理缓存，无需刷新 CDN。 */
-const SKIP_REFRESH_PREFIXES = ["js/", "css/", "vendors/"];
+/**
+ * 这些资源改由 jsDelivr 提供（见主题配置 vendors.npm_cdn），站点页面不再引用本地副本。
+ * 构建产物中即使存在也不上传，并清理对象存储中的历史遗留文件。
+ */
+const EXCLUDED_PREFIXES = [
+  "js/",
+  "css/",
+  "vendors/",
+  "extentions/waline.",
+];
+
+/**
+ * 判断文件是否属于「不应存在于站点上的主题静态资源」。
+ * @param {string} filePath 构建产物相对路径
+ * @returns {boolean} 是否应忽略
+ */
+const isExcluded = (filePath) =>
+  EXCLUDED_PREFIXES.some((prefix) => filePath.startsWith(prefix));
 
 /** 兼容 glob v9+ 的 `globSync` 命名导出与旧版的 `glob.sync`。 */
 const globSync = glob.globSync || glob.sync;
@@ -381,6 +397,113 @@ const fetchRemoteInfo = async (bucketManager, bucket, filePaths) => {
 };
 
 /**
+ * 分页列出指定前缀下的全部对象 key。
+ * @param {object} bucketManager 七牛 BucketManager
+ * @param {string} bucket 空间名称
+ * @param {string} prefix 对象 key 前缀
+ * @returns {Promise<string[]>} 对象 key 列表
+ */
+const listKeysByPrefix = async (bucketManager, bucket, prefix) => {
+  const keys = [];
+  let marker = "";
+
+  for (;;) {
+    const result = await withRetry(
+      () =>
+        new Promise((resolve, reject) => {
+          bucketManager.listPrefix(
+            bucket,
+            { prefix, marker, limit: BATCH_OPS_LIMIT },
+            (error, data, resp) => {
+              if (error) {
+                reject(error);
+                return;
+              }
+
+              const statusCode = resp && resp.statusCode;
+              if (statusCode && (statusCode < 200 || statusCode >= 300)) {
+                const listError = new Error(`列举对象失败：status=${statusCode}`);
+                listError.statusCode = statusCode;
+                reject(listError);
+                return;
+              }
+
+              resolve(data || {});
+            }
+          );
+        }),
+      `列举前缀 ${prefix}`
+    );
+
+    const items = Array.isArray(result.items) ? result.items : [];
+    for (const item of items) {
+      if (item && item.key) keys.push(item.key);
+    }
+
+    if (!result.marker || result.marker === marker || items.length === 0) break;
+    marker = result.marker;
+  }
+
+  return keys;
+};
+
+/**
+ * 批量删除对象，文件已不存在（612）视为成功。
+ * @param {object} bucketManager 七牛 BucketManager
+ * @param {string} bucket 空间名称
+ * @param {string[]} keys 待删除的对象 key
+ * @returns {Promise<number>} 删除（或已不存在）的对象数量
+ */
+const batchDelete = async (bucketManager, bucket, keys) => {
+  let removed = 0;
+
+  for (let start = 0; start < keys.length; start += BATCH_OPS_LIMIT) {
+    const batch = keys.slice(start, start + BATCH_OPS_LIMIT);
+    const operations = batch.map((key) => qiniu.rs.deleteOp(bucket, key));
+
+    const result = await withRetry(
+      () => bucketManager.batch(operations),
+      `批量删除第 ${start / BATCH_OPS_LIMIT + 1} 批（${batch.length} 个文件）`
+    );
+
+    const items = Array.isArray(result && result.data) ? result.data : [];
+    items.forEach((item, index) => {
+      if (item && (item.code === 200 || item.code === 612)) {
+        removed += 1;
+      } else {
+        console.warn(
+          `删除失败 ${batch[index]}：code=${
+            item && item.code
+          } ${JSON.stringify(item && item.data)}`
+        );
+      }
+    });
+  }
+
+  return removed;
+};
+
+/**
+ * 清理对象存储中历史遗留的未使用主题资源。
+ * 这些文件不再由构建产物提供，保留它们只会继续被扫描器命中、消耗 CDN 流量。
+ * @param {object} bucketManager 七牛 BucketManager
+ * @param {string} bucket 空间名称
+ * @returns {Promise<number>} 清理的对象数量
+ */
+const pruneRemoteAssets = async (bucketManager, bucket) => {
+  let removed = 0;
+
+  for (const prefix of EXCLUDED_PREFIXES) {
+    const keys = await listKeysByPrefix(bucketManager, bucket, prefix);
+    if (keys.length === 0) continue;
+    removed += await batchDelete(bucketManager, bucket, keys);
+    console.log(`已清理 ${prefix} 下的 ${keys.length} 个遗留对象。`);
+  }
+
+  return removed;
+};
+
+/**
  * 比较本地与远端文件，找出需要上传的文件。
  * 先比较大小，大小一致时再比较 ETag，避免内容变化但大小不变的文件被漏传。
  * @param {string[]} filePaths 构建产物相对路径
@@ -502,7 +625,10 @@ const uploadFile = async (context, key, filePath) => {
 
 /**
  * 根据变更文件生成需要刷新的 CDN URL。
- * 目录型 URL（`xxx/`）与 `index.html` 一并刷新，避免访问到旧页面。
+ *
+ * 每个页面只刷新一种形式：目录页刷新 `xxx/`，不再额外刷新 `xxx/index.html`。
+ * 站点的 canonical、sitemap 与站内链接都使用目录形式，直接访问 `index.html`
+ * 的流量很小；同时刷新两种形式会让七牛的 URL 刷新额度直接翻倍。
  * @param {string[]} changedFiles 已上传的文件（相对路径）
  * @param {string} domain 已规范化的域名
  * @returns {string[]} 去重后的 URL 列表
@@ -511,16 +637,14 @@ const buildRefreshUrls = (changedFiles, domain) => {
   const urls = new Set();
 
   for (const filePath of changedFiles) {
-    if (SKIP_REFRESH_PREFIXES.some((prefix) => filePath.startsWith(prefix))) {
-      continue;
-    }
-
-    urls.add(`${domain}/${filePath}`);
+    if (isExcluded(filePath)) continue;
 
     if (filePath === "index.html") {
-      urls.add(domain);
+      urls.add(`${domain}/`);
     } else if (filePath.endsWith("/index.html")) {
       urls.add(`${domain}/${filePath.slice(0, -"index.html".length)}`);
+    } else {
+      urls.add(`${domain}/${filePath}`);
     }
   }
 
@@ -585,11 +709,31 @@ const main = async () => {
   const client = createClient(options);
 
   extractArtifact(TAR_PATH, LOCAL_DIR);
-  const filePaths = listFiles(LOCAL_DIR);
-  console.log(`构建产物共 ${filePaths.length} 个文件。`);
+  const allFiles = listFiles(LOCAL_DIR);
+  const filePaths = allFiles.filter((filePath) => !isExcluded(filePath));
+  console.log(
+    `构建产物共 ${allFiles.length} 个文件，忽略 ${
+      allFiles.length - filePaths.length
+    } 个未使用的主题资源。`
+  );
 
   if (filePaths.length === 0) {
     throw new Error(`构建产物为空：${TAR_PATH}`);
+  }
+
+  // 清理历史上传的 js/css/vendors 副本；失败不阻断部署，仅提示。
+  try {
+    const removed = await pruneRemoteAssets(
+      client.bucketManager,
+      options.bucket
+    );
+    if (removed > 0) {
+      console.log(`已清理 ${removed} 个历史遗留的未使用资源。`);
+    }
+  } catch (error) {
+    console.warn(
+      `清理遗留资源失败（${describeError(error)}），继续执行后续步骤。`
+    );
   }
 
   let changedFiles;
@@ -653,9 +797,12 @@ const main = async () => {
   const urls = buildRefreshUrls(uploaded, options.domain);
   for (let start = 0; start < urls.length; start += REFRESH_BATCH_SIZE) {
     const batch = urls.slice(start, start + REFRESH_BATCH_SIZE);
+    // 七牛刷新接口没有幂等标识，超时重试会重复消耗刷新额度。
+    // 因此最多重试 1 次，网络持续异常时宁可让流水线失败后人工处理。
     await withRetry(
       () => refreshUrls(client.mac, batch),
-      `刷新 CDN（${batch.length} 个 URL）`
+      `刷新 CDN（${batch.length} 个 URL）`,
+      1
     );
   }
   console.log(`CDN 刷新完成：${urls.length} 个 URL。`);
