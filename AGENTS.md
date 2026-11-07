@@ -75,6 +75,8 @@
 - **deploy-qiniu**（仅 main）：下载 artifact → `npm install qiniu glob` → 执行 `upload_qiniu.cjs` 上传增量文件并刷新 CDN。
 
 > 上传脚本按文件大小与七牛 ETag 判断增量（>4MB 自动分片上传，失败自动重试），并清理对象存储中历史遗留的 `js/`、`css/`、`vendors/`、`extentions/waline.*`；刷新 CDN 时每个页面只刷新目录形式（如 `/posts/x/`），不再同时刷新 `index.html`，避免刷新额度翻倍。线上静态资源 `Cache-Control` 为 1 年，改动这些目录需更换版本号或手动刷新。
+>
+> 若上传成功但 CDN 刷新因额度耗尽失败，重跑流程不会再次上传（ETag 相同），因此也不会刷新。此时在 Actions 页面手动运行 Build 并勾选 `force_refresh`，脚本会以 `FORCE_REFRESH=1` 刷新全部页面。
 
 Dependabot 每天检查 npm 依赖更新（`open-pull-requests-limit: 20`）。
 

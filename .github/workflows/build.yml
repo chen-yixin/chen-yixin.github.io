@@ -10,6 +10,12 @@ on:
       - ".claude/**"
       - "scaffolds/**"
   pull_request:
+  workflow_dispatch:
+    inputs:
+      force_refresh:
+        description: "强制刷新全部页面（用于刷新额度耗尽后的补刷）"
+        type: boolean
+        default: false
 
 # 连续 push 时取消仍在运行的旧任务，避免同一批页面被重复上传与刷新。
 concurrency:
@@ -65,7 +71,7 @@ jobs:
 
   deploy-qiniu:
     needs: build
-    if: startsWith(github.event.ref, 'refs/heads/main')
+    if: startsWith(github.event.ref, 'refs/heads/main') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
@@ -91,6 +97,7 @@ jobs:
           QINIU_SECRET_KEY:
           QINIU_BUCKET:
           QINIU_BUCKET_DOMAIN:
+          FORCE_REFRESH: ${{ inputs.force_refresh && '1' || '0' }}
         run: >
           node 
           upload_qiniu.cjs 

@@ -58,6 +58,13 @@ const isExcluded = (filePath) =>
 const globSync = glob.globSync || glob.sync;
 
 /**
+ * 手动触发时强制刷新所有页面。
+ * 用于「文件已上传、但 CDN 刷新因额度耗尽失败」后的补刷：
+ * 此时重跑不会再产生变更文件，普通流程会跳过刷新。
+ */
+const FORCE_REFRESH = process.env.FORCE_REFRESH === "1";
+
+/**
  * 读取命令行参数，缺省时回退到同名环境变量。
  * @param {number} index 参数在 process.argv 中的位置
  * @param {string} envName 环境变量名
@@ -755,9 +762,13 @@ const main = async () => {
     } 个未变更文件。`
   );
 
-  if (changedFiles.length === 0) {
+  if (changedFiles.length === 0 && !FORCE_REFRESH) {
     console.log("没有需要上传的文件，跳过 CDN 刷新。");
     return;
+  }
+
+  if (changedFiles.length === 0) {
+    console.log("没有需要上传的文件，按 FORCE_REFRESH 刷新全部页面。");
   }
 
   const uploadContext = {
@@ -794,7 +805,10 @@ const main = async () => {
     `上传完成：成功 ${uploaded.length} 个，失败 ${failed.length} 个。`
   );
 
-  const urls = buildRefreshUrls(uploaded, options.domain);
+  // 正常情况下只刷新本次上传成功的文件；FORCE_REFRESH 时刷新全部页面，
+  // 用于补刷「上传成功但刷新失败」的构建。
+  const refreshSource = FORCE_REFRESH ? filePaths : uploaded;
+  const urls = buildRefreshUrls(refreshSource, options.domain);
   for (let start = 0; start < urls.length; start += REFRESH_BATCH_SIZE) {
     const batch = urls.slice(start, start + REFRESH_BATCH_SIZE);
     // 七牛刷新接口没有幂等标识，超时重试会重复消耗刷新额度。
