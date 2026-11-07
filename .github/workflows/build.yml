@@ -39,6 +39,11 @@ jobs:
 
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          # hexo-filter-date-from-git 依赖 git log 读取文章最后编辑时间。
+          # 浅克隆（默认 fetch-depth: 1）没有历史，插件会回退为构建时间，
+          # 导致所有文章的「最后编辑」每次都变成发布当天。
+          fetch-depth: 0
 
       - name: Install Hexo environment
         run: pnpm install --frozen-lockfile
