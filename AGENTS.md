@@ -64,7 +64,7 @@
 8. **自检**：`npx hexo generate --force` 后抽查 `public/`——canonical 与 og:url 不含 `index.html`、og:image 为 1200×630、文章页 `meta description` 非空、引用的外部资源可访问。
 9. **换行符**：仓库 `core.autocrlf=true`；用脚本批量改文章时要保留原行尾，否则会产生整文件 diff。
 10. **提交信息**：`<emoji> <type>(<scope>): 中文摘要`，正文用 `-` 列表说明改动（与仓库历史一致）。
-11. **构建确定性**：`scripts/stabilize-locals.js` 固定 posts/pages/tags/categories 的排序，配合 `index_generator.order_by: -date title`、MathJax `svg.fontCache: none`、`marked.mangle: false` 消除每次构建都会出现的伪变更。新增文章时避免与其他文章使用完全相同的 `date`（同日发布请错开时间）。
+11. **构建确定性**：`scripts/stabilize-locals.js` 固定 posts/pages/tags/categories 的排序，`scripts/stabilize-output.js` 规范化 atom.xml 与 search-index.json 中不稳定的标签顺序；配合 `index_generator.order_by: -date title`、MathJax `svg.fontCache: none`、`marked.mangle: false` 消除每次构建都会出现的伪变更。新增文章时避免与其他文章使用完全相同的 `date`（同日发布请错开时间）。
 
 ## CI/CD
 

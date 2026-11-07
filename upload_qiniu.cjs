@@ -809,17 +809,37 @@ const main = async () => {
   // 用于补刷「上传成功但刷新失败」的构建。
   const refreshSource = FORCE_REFRESH ? filePaths : uploaded;
   const urls = buildRefreshUrls(refreshSource, options.domain);
+  let refreshFailed = false;
+
   for (let start = 0; start < urls.length; start += REFRESH_BATCH_SIZE) {
     const batch = urls.slice(start, start + REFRESH_BATCH_SIZE);
-    // 七牛刷新接口没有幂等标识，超时重试会重复消耗刷新额度。
-    // 因此最多重试 1 次，网络持续异常时宁可让流水线失败后人工处理。
-    await withRetry(
-      () => refreshUrls(client.mac, batch),
-      `刷新 CDN（${batch.length} 个 URL）`,
-      1
-    );
+    try {
+      // 七牛刷新接口没有幂等标识，超时重试会重复消耗刷新额度。
+      // 因此最多重试 1 次，网络持续异常时宁可让流水线失败后人工处理。
+      await withRetry(
+        () => refreshUrls(client.mac, batch),
+        `刷新 CDN（${batch.length} 个 URL）`,
+        1
+      );
+    } catch (error) {
+      // 文件已经上传成功，刷新失败只影响缓存新鲜度，不应让整个部署失败。
+      refreshFailed = true;
+      console.warn(
+        `CDN 刷新失败（${describeError(error)}），跳过剩余 ${
+          urls.length - start
+        } 个 URL。`
+      );
+      break;
+    }
   }
-  console.log(`CDN 刷新完成：${urls.length} 个 URL。`);
+
+  if (refreshFailed) {
+    console.log(
+      "::warning::CDN 刷新未完成（通常是当日额度耗尽）。文件已上传；额度恢复后请手动运行 Build 并勾选 force_refresh 补刷。"
+    );
+  } else {
+    console.log(`CDN 刷新完成：${urls.length} 个 URL。`);
+  }
 
   if (failed.length > 0) {
     const preview = failed
